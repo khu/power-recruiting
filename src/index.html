@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>PowerRecruiting</title>
+		<link type="text/css" href="css/start/jquery-ui-1.8.6.custom.css" rel="stylesheet" />	
+		<link type="text/css" href="css/ihire.css" rel="stylesheet"/>
+		<link rel="stylesheet" type="text/css" href="css/colorbox/colorbox.css" media="screen" />
+		
+		<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery.class.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
+		<script type="text/javascript" src="js/csv.js"></script>
+		<script type="text/javascript" src="js/candidate.js"></script>
+		<script type="text/javascript" src="js/candidates.js"></script>
+		<script type="text/javascript" src="js/profile.js"></script>
+		<script type="text/javascript" src="js/profiles.js"></script>
+		<script type="text/javascript" src="js/pages.js"></script>
+		<script type="text/javascript" src="js/RGraph/RGraph.common.core.js" ></script>
+	    <script type="text/javascript" src="js/RGraph/RGraph.common.annotate.js" ></script>
+	    <script type="text/javascript" src="js/RGraph/RGraph.common.context.js" ></script>
+	    <script type="text/javascript" src="js/RGraph/RGraph.common.tooltips.js" ></script>
+	    <script type="text/javascript" src="js/RGraph/RGraph.common.zoom.js" ></script>
+	    <script type="text/javascript" src="js/RGraph/RGraph.common.resizing.js" ></script>
+	    <script type="text/javascript" src="js/RGraph/RGraph.pie.js" ></script>
+		<script type="text/javascript" src="js/jquery.colorbox.js"></script>
+	</head>
+	<body>
+		<div class="left-panel">
+			<div class="left-header"></div>
+			<div id="navigators" >
+				<div class="list-containers">
+					<div class="list-item item-selected"><span id="open-import-export" class="list-item-leaf">Import/Export</span></div>
+					<div class="list-item"><span id="open-rank" class="list-item-leaf">Rank</span></div>
+					<div class="list-item" id="open-statisic-container"><span id="open-satistic" class="list-item-leaf" >Satistic</span></div>
+				</div>
+			</div>
+		</div>
+		<div class="right-panel">
+			<div class="right-header">
+				<div class="title" id="title">Import/Export</div>
+			</div>
+			<div style="background-image:url('css/images/bg.png');background-repeat: repeat-x;">
+				<div id="import-export">
+					<div class="sub-tab-header">
+						<div class="sub-tab-button-container sub-tab-button-active">
+							<span class="sub-tab-button" id="open-import">Import</span>
+						</div>
+						<div class="sub-tab-button-container" id="open-export-button">
+							<span class="sub-tab-button" id="open-export">Export</span>
+						</div>
+					</div>
+					<div id="import">
+						<div class="form-fieldset">
+							<div class="form-fieldset-title">Candidates Information</div>
+							<div class="panel-body">
+								<div class="field-textarea">
+									<div class="form-field-container">
+										<textarea  id="import-data" class="input-text">
+魏文彬	男	西安交通大学	计算机科学与技术	13659245448	12	11	37	45
+姜欣	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44
+蒋新建	男	西安交通大学	计算机系统结构	13572945374	12	11	27	46
+罗伟雄	男	西安交通大学	计算机科学与技术	13759920843	12	11	27	45
+张华立	女	西安交通大学	信息工程	13772148940	12	11	26	47
+龙丹妮	男	西北大学	计算机应用	18966738426	12	11	25	37
+许三多	男	西北工业大学	微机电系统集成设计技术	15902978986	12	11	24	43
+甘小宁	男	西电		15102936386	12	11	24	34
+张玉生	男	西电	计算机	13519103505	12	11	23	37
+王志刚	男	西电	计算机	15929772578	12	11	22	41
+仕明	男	西电	计算机系统结构	15991700216	12	11	22	33
+康洪雷	男	西电	计算机	15829765979	12	11	22	30
+徐仕明	男	西交	计算机科学与技术	15991983723	12	11	21	43
+舒崇福	男	上海交通大学	自动化双控	13701817742	12	11	20	32
+王中军	女	西安交通大学	通信与信息系统	13709208644	12	11	20	40
+杨文虎	男	西电		13772457436	12	11	16	17
+赵明仁	女	西电	计算机应用技术	15991773341	12	11	16	26
+王中磊	男	电信学院	计算机科学与技术	15934840819	12	11	16	20
+施方平	女	西安交通大学	计算机科学与技术	13991959204	11	11	19	39
+高爱平	男	西安交通大学	计算机软件与理论	13772041906	11	11	29	46
+张寒冰	男	西北工业大学	计算数学	13772524307	11	11	28	45
+韩志伟	女	西电	计算机应用技术	13484930670	11	11	27	36
+姬建刚	女	西北大学	计算机软件与理论	13659238741	11	11	26	40
+王世顺	男	西安交通大学	计算机科学与技术	13572878871	11	11	25	46
+甄洪民	女	西北工业大学	计算机科学与技术	15109277632	11	11	25	37
+冯志远	女	西安交通大学		13488320497	11	11	25	47
+刘义强	男	西安交通大学	计算机系统结构	13991292748	11	11	23	44
+杨峻峰	男	西安电子科技大学	计算机系统结构	13572099099	11	11	23	32
+邓长叶	男	西电		13772102573	11	11	22	35
+张金华	女	西安交通大学	计算机系统结构	15091525605	11	11	21	28
+祝树良	女	西安电子科技大学	计算机应用	13630211305	11	11	20	34
+张崇林	女	西交	计算机科学与技术	13484919134	11	11	20	43
+邓宝	男	西北工业大学	计算机应用技术	13700238334	11	11	19	28
+许兰	女	西安交通大学	软件工程	13519124356	11	11	18	34
+刘海洋	男	西电	计算机软件	13809154213	11	11	16	33
+										</textarea>	
+									</div>
+								</div>
+							</div>
+							<div class="form-fieldset-instructions">Please enter the information above.</div>
+							<div class="form-button-container">
+								<div class="form-button" id="confirm-button">
+									<span>Reset Data</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="export" style="display:none">
+						<div class="form-fieldset">
+							<div class="form-fieldset-title">Candidates Information</div>
+							<div class="panel-body">
+								<div class="field-textarea">
+									<div class="form-field-container">
+										<textarea id="export-data" class="input-text"></textarea>	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="rank" style="display:none;">			
+					<div class="sub-tab-header">
+					</div>
+					<div id="groups">
+						<div id="single-group">
+						</div>
+						<div class="right-header">
+							<div class="title">Overall Rank</div>
+						</div>
+						<div id="all-groups">
+							<div class="grade grade1" ><div class="grade-bg-text">1</div></div>
+							<div class="grade grade2-A"><div class="grade-bg-text">2-A</div></div>
+							<div class="grade grade2-B"><div class="grade-bg-text">2-B</div></div>
+							<div class="grade grade2-C"><div class="grade-bg-text">2-C</div></div>
+							<div class="grade grade3"><div class="grade-bg-text">3</div></div>
+						</div>
+					</div>
+				</div>
+				<div id="satistic" style="display:none">
+					<div class="sub-tab-header">
+						<div class="sub-tab-button-container sub-tab-button-active">
+							<span class="sub-tab-button" id="open-diversity-chart">Satistic</span>
+						</div>
+					</div>
+					<div id="diversity-chart">
+				        <canvas id="diversity-chart-canvas" width="420" height="300">[No canvas support]</canvas>
+					</div>
+				</div>
+			</div>
+
+			<div id="profiles" style="display:none;">
+				
+			</div>
+		</div>
+
+		
+		
+		<script>
+			$(function(){
+				$(".list-item").click(function() {
+					navigate_to($(this).find('.list-item-leaf'));
+				});
+				$("#confirm-button").click(function(){
+					import_candidates($("#import-data"));
+				});
+				$("#open-export-button").click(function(){
+					export_candidates($("#export-data"));
+				});
+				$("#open-statisic-container").click(function(){
+					var candidates = new Candidates();
+					candidates.load();
+
+					var diversityPie = new RGraph.Pie('diversity-chart-canvas', [candidates.females_amount(),candidates.males_amount()]);
+					var females_label = candidates.females_percentage() + "%";
+					var male_label = candidates.males_percentage() + "%";
+					
+		            diversityPie.Set('chart.labels', ['Female (' + females_label + ')', 'Male (' + male_label + ')']);
+		            diversityPie.Set('chart.gutter', 30);
+		            diversityPie.Set('chart.shadow', false);
+		            diversityPie.Set('chart.tooltips.effect', 'contract');
+		            diversityPie.Set('chart.tooltips', [
+		                                         candidates.females_amount() + ' of ' + candidates.size(),
+		                                         candidates.males_amount() + ' of '  + candidates.size(),
+		                                       ]
+		                                      );
+		            diversityPie.Set('chart.highlight.style', '3d');
+	                diversityPie.Set('chart.zoom.hdir', 'center');
+	                diversityPie.Set('chart.zoom.vdir', 'up');
+	                diversityPie.Set('chart.labels.sticks', true);
+	                diversityPie.Set('chart.labels.sticks.color', '#aaa');
+	                diversityPie.Set('chart.contextmenu', [['Zoom in', RGraph.Zoom]]);
+		            diversityPie.Set('chart.linewidth', 5);
+		            diversityPie.Set('chart.labels.sticks', true);
+		            diversityPie.Set('chart.strokestyle', 'transparent');
+			        diversityPie.Set('chart.colors', ["pink", "#CCF"]);
+		            diversityPie.Draw();
+				});
+
+				var candidates = new Candidates();
+				candidates.try_persist_and_load($("#import-data").val())
+				candidates.render();
+				init_pages();	
+			})
+		</script>
+	</body>
+</html>
+
+
