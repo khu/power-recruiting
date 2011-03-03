@@ -326,15 +326,22 @@ html, body {
 
 .candidate {
 	width: 60px; 
-	height: 30px; 
-	padding: 5px; 
+	height: 45px;
+	padding: 5px;
 	float: left; 
 	margin: 0 10px 10px 0; 
-	font-size: .9em;
+	font-size: .75em;
 	box-shadow:5px 5px 10px #000;
 	-webkit-box-shadow:5px 5px 10px #000;
-	-moz-box-shadow: 5px 5px 10px #000
+	-moz-box-shadow: 5px 5px 10px #000;
+	text-align: center;
+	vertical-align: middle;
 }
+
+.candidate .score {
+	font-size: .95em;
+}
+
 .ui-widget-header p, .ui-widget-content p { margin: 0; }
 .grade {
 	border-bottom: 2px dashed #021022;

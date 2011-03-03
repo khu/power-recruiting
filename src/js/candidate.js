@@ -40,7 +40,7 @@ updateGrade:function(grade) {
 	$(all_grade).each(function(index, elem) {
 		if (grade.indexOf(elem) > -1) {
 			candidate.grade = elem.replace("grade", "")
-		}		
+		}
 	})
 },
 _is_single_group : function() {
@@ -65,7 +65,7 @@ render:function() {
 	if (this.is_female()) {
 		css = "female"
 	}
-	var text = "<div id=" + this.id + " class='candidate  ui-widget-content ui-draggable " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a></div>";
+	var text = "<div id=" + this.id + " class='candidate  ui-widget-content ui-draggable " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
 	var obj = $("#" + group.attr('id') + " .grade" + this.grade);
 	obj.append(text)
 },

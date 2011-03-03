@@ -148,15 +148,43 @@ var Candidates = $.Class.create({
 		this.fromCSV(getLocalStorage().getItem('candidates'));
 	},
     rank:function($item, grade) {
-		var candidate = this.find($item.attr('id'))
-		candidate.updateGrade(grade.attr('class').toString())
+		var candidate = $item;
+
+		var candidateInstance = this.find($item.attr('id'));
+		candidateInstance.updateGrade(grade.attr('class').toString())
 		this.persist()
-		$item.fadeOut(function() {
-			$item.find( "a.ui-icon-refresh" ).remove()
-				.end()
-				.appendTo(grade)
-				.fadeIn();
-		});
+
+		if (this.fromSingleGroup(candidate) && this.toGradeInAll(grade)) {
+			var candidateClone = candidate.clone();
+			candidate.draggable("disable");
+			candidateClone.draggable({
+				revert: "invalid", // when not dropped, the item will revert back to its initial position
+				helper: "clone",
+				cursor: "move"
+			});
+			candidateClone.appendTo(grade).fadeIn();
+		} 
+		else if ((this.fromSingleGroup(candidate) && this.toGradeForGroup(grade))
+				|| (this.fromAllGroups(candidate) && this.toGradeInAll(grade))){
+			candidate.appendTo(grade).fadeIn();
+		} 
+		else if (this.fromAllGroups(candidate) && this.toGradeForGroup(grade)){
+			$("#single-group > div").find("#"+candidate.attr("id")).remove();
+			candidate.appendTo(grade).fadeIn();
+		}
+		
+	},
+	fromSingleGroup:function(item){
+		return item.parent().parent().parent().attr("id") == "single-group";
+	},
+	fromAllGroups:function(item){
+		return item.parent().parent().attr("id") == "all-groups";
+	},
+	toGradeForGroup:function(grade){
+		return grade.parent().parent().attr("id") == "single-group";
+	},
+	toGradeInAll:function(grade){
+		return grade.parent().attr("id") == "all-groups"
 	},
 	females_amount:function() {
 		var amount = 0;
