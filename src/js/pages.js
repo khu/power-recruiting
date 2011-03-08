@@ -63,11 +63,11 @@ function index_in_scople(parent, current_elem, select) {
 }
 
 function import_candidates(data_from){
-	var candidates = new Candidates()
 	if (data_from.val().trim() == "") {
-		candidates.clear();
 		return;
 	}
+
+	var candidates = new Candidates()
 	candidates.fromCSV(data_from.val())
 	candidates.persist();
 	candidates.render();

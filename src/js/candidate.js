@@ -15,8 +15,8 @@ initialize: function(obj) {
 	this.w_correct = obj[8] - 0;
 	this.w_answered = obj[9]  - 0;
 	if (obj[10] == null) {
-		day = (this.id / 50) + 1
-		group = ((this.id / 10) + 1) % 5
+		day = (this.id - 1) / 50 + 1
+		group = ((this.id - 1) / 10 + 1) % 5
 		this.group = "G-" + Math.floor(day) + "-" + Math.floor(group);
 	} else {
 		this.group = obj[10]

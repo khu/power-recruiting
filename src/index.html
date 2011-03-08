@@ -96,7 +96,17 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-fieldset-instructions">Please enter the information above.</div>
+							<div class="form-fieldset-instructions">
+								<span>Please select the size of one group:</span>
+								<select id="group-size">
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+									<option value="8">8</option>
+									<option value="9">9</option>
+									<option value="10">10</option>
+								</select>
+							</div>
 							<div class="form-button-container">
 								<div class="form-button" id="confirm-button">
 									<span>Reset Data</span>
@@ -162,6 +172,14 @@
 				$("#confirm-button").click(function(){
 					import_candidates($("#import-data"));
 				});
+				
+				$(".form-button").mousedown(function(){
+					$(this).css("border-color","black");
+				});
+				$(".form-button").mouseup(function(){
+					$(this).css("border-color","#A6A6A6");
+				});
+				
 				$("#open-export-button").click(function(){
 					export_candidates($("#export-data"));
 				});
