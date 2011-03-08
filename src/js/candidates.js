@@ -38,14 +38,33 @@ var Candidates = $.Class.create({
 			if (objs[i].indexOf("姓名") > -1){
 				continue;
 			}
-			this.init_id_for_first_time(objs[i], i)
+			this.init_for_the_first_time(objs[i], i, size)
 			this._candidates.push(new Candidate(objs[i]))
 		}
 	},
-	init_id_for_first_time:function(objs, i) {
-		if (objs.length == 9) {
-			objs.unshift(i + 1)				
-		}	
+	init_for_the_first_time:function(fieldsOfCandidate, i, candidatesCount) {
+		if (fieldsOfCandidate.length == 9) {
+			this.init_id(fieldsOfCandidate, i);
+			this.init_group(fieldsOfCandidate, candidatesCount);
+			this.init_grade(fieldsOfCandidate);
+		};
+	},
+	init_id:function(fieldsOfCandidate, i) {
+		fieldsOfCandidate.unshift(i + 1);	
+	},
+	init_group:function(fieldsOfCandidate, candidatesCount) {
+		var groupCount = $("#group-size").val()
+		var candidateId = fieldsOfCandidate[0]
+		
+		var groupInAll = Math.floor((candidateId-1) / Math.floor(candidatesCount / (groupCount - 1))) + 1;
+		var groupsPerDay = 5;
+		var group = Math.floor((groupInAll-1) % groupsPerDay) + 1;
+		var day = Math.floor((groupInAll-1) / groupsPerDay) + 1;
+		
+		fieldsOfCandidate[10] = "G-" + day + "-" + group;
+	},
+	init_grade:function(fieldsOfCandidate) {
+		fieldsOfCandidate[11] = 'D'
 	},
 	find:function(id) {
 		var size = this._candidates.length

@@ -14,15 +14,8 @@ initialize: function(obj) {
 	this.logic_answered = obj[7]  - 0;
 	this.w_correct = obj[8] - 0;
 	this.w_answered = obj[9]  - 0;
-	if (obj[10] == null) {
-		day = (this.id - 1) / 50 + 1
-		group = ((this.id - 1) / 10 + 1) % 5
-		this.group = "G-" + Math.floor(day) + "-" + Math.floor(group);
-	} else {
-		this.group = obj[10]
-	}
-
-	this.grade = obj[11] == null? 'D' : obj[11];
+	this.group = obj[10];
+	this.grade = obj[11];
 },
 gender_str:function() {
 	return this.is_female() ? "Female" : "Male"
