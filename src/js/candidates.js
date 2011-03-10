@@ -3,8 +3,9 @@ function getLocalStorage() {
 }
 
 var Candidates = $.Class.create({
-	initialize: function() {
+	initialize: function(groupsCount) {
 		this._candidates = [];
+		this._groupsCount = groupsCount == null ? 5 : groupsCount;
 	},
 	// methods
 	size: function() {
@@ -38,28 +39,28 @@ var Candidates = $.Class.create({
 			if (objs[i].indexOf("姓名") > -1){
 				continue;
 			}
-			this.init_for_the_first_time(objs[i], i, size)
+			this.init_for_the_first_time(objs[i], i)
 			this._candidates.push(new Candidate(objs[i]))
 		}
 	},
-	init_for_the_first_time:function(fieldsOfCandidate, i, candidatesCount) {
+	init_for_the_first_time:function(fieldsOfCandidate, i) {
 		if (fieldsOfCandidate.length == 9) {
 			this.init_id(fieldsOfCandidate, i);
-			this.init_group(fieldsOfCandidate, candidatesCount);
+			this.init_group(fieldsOfCandidate);
 			this.init_grade(fieldsOfCandidate);
 		};
 	},
 	init_id:function(fieldsOfCandidate, i) {
 		fieldsOfCandidate.unshift(i + 1);	
 	},
-	init_group:function(fieldsOfCandidate, candidatesCount) {
-		var groupCount = $("#group-size").val()
-		var candidateId = fieldsOfCandidate[0]
+	init_group:function(fieldsOfCandidate) {
+		var candidateIndex = fieldsOfCandidate[0] - 1;
 		
-		var groupInAll = Math.floor((candidateId-1) / Math.floor(candidatesCount / (groupCount - 1))) + 1;
-		var groupsPerDay = 5;
-		var group = Math.floor((groupInAll-1) % groupsPerDay) + 1;
-		var day = Math.floor((groupInAll-1) / groupsPerDay) + 1;
+		var groupIndex = candidateIndex % this._groupsCount;
+
+		var groupsPerDay = this._groupsCount < 5 ? this._groupsCount : 5;
+		var group = groupIndex % groupsPerDay + 1;
+		var day = Math.floor(groupIndex / groupsPerDay) + 1;
 		
 		fieldsOfCandidate[10] = "G-" + day + "-" + group;
 	},
@@ -108,7 +109,7 @@ var Candidates = $.Class.create({
 				selected = "sub-tab-button-active";
 				display = "";
 			}
-			var  open_panel_id = 'open-' +  candidate.group + '-panel';
+			var open_panel_id = 'open-' +  candidate.group + '-panel';
 			var panel_id = candidate.group + '-panel';
 			if (!$("#" + open_panel_id).exists()) {
 				var template = '<div class="sub-tab-button-container ' + selected + '">'
@@ -132,9 +133,9 @@ var Candidates = $.Class.create({
 	},
 	clean_init:function() {
 		$(".candidate").remove();
+		$("#rank .sub-tab-button-container").remove();
 	},
 	persist:function() {
-		this.clear();
 		getLocalStorage().setItem('candidates', this.toCSV())
 	},
 	try_persist_and_load:function(html) {

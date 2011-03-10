@@ -277,6 +277,12 @@ html, body {
 	text-align: center;
 }
 
+input[type="number"] {
+	border-radius: .4em;
+	width: 50px;
+	margin-left: 10px;
+}
+
 .form-button {
 	background-color: #CCC;
 	background-image: -webkit-gradient(linear,0% 0,0% 100%,color-stop(0%,white),color-stop(2%,#E6E6E6),color-stop(100%,#BABABA));

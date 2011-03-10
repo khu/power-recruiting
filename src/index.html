@@ -97,14 +97,8 @@
 								</div>
 							</div>
 							<div class="form-fieldset-instructions">
-								<span>Please select the size of one group:</span>
-								<select id="group-size">
-									<option value="5">5</option>
-									<option value="6">6</option>
-									<option value="7">7</option>
-									<option value="8">8</option>
-									<option value="9">9</option>
-								</select>
+								<span>Please select the groups count:</span>
+								<input type="number" id="groups-count" min="3" max="13" value="5">
 							</div>
 							<div class="form-button-container">
 								<div class="form-button" id="confirm-button">
@@ -169,7 +163,7 @@
 					navigate_to($(this).find('.list-item-leaf'));
 				});
 				$("#confirm-button").click(function(){
-					import_candidates($("#import-data"));
+					import_candidates($("#import-data").val(), $("#groups-count").val());
 				});
 				
 				$(".form-button").mousedown(function(){
@@ -183,36 +177,12 @@
 					export_candidates($("#export-data"));
 				});
 				$("#open-statisic-container").click(function(){
-					var candidates = new Candidates();
-					candidates.load();
-
-					var diversityPie = new RGraph.Pie('diversity-chart-canvas', [candidates.females_amount(),candidates.males_amount()]);
-					var females_label = candidates.females_percentage() + "%";
-					var male_label = candidates.males_percentage() + "%";
-					
-		            diversityPie.Set('chart.labels', ['Female (' + females_label + ')', 'Male (' + male_label + ')']);
-		            diversityPie.Set('chart.gutter', 30);
-		            diversityPie.Set('chart.shadow', false);
-		            diversityPie.Set('chart.tooltips.effect', 'contract');
-		            diversityPie.Set('chart.tooltips', [
-		                                         candidates.females_amount() + ' of ' + candidates.size(),
-		                                         candidates.males_amount() + ' of '  + candidates.size(),
-		                                       ]
-		                                      );
-		            diversityPie.Set('chart.highlight.style', '3d');
-	                diversityPie.Set('chart.zoom.hdir', 'center');
-	                diversityPie.Set('chart.zoom.vdir', 'up');
-	                diversityPie.Set('chart.labels.sticks', true);
-	                diversityPie.Set('chart.labels.sticks.color', '#aaa');
-	                diversityPie.Set('chart.contextmenu', [['Zoom in', RGraph.Zoom]]);
-		            diversityPie.Set('chart.linewidth', 5);
-		            diversityPie.Set('chart.labels.sticks', true);
-		            diversityPie.Set('chart.strokestyle', 'transparent');
-			        diversityPie.Set('chart.colors', ["pink", "#CCF"]);
-		            diversityPie.Draw();
+					statistic_draw();
 				});
 
-				var candidates = new Candidates();
+				load_group_count();
+
+				var candidates = new Candidates($("#groups-count").val());
 				candidates.try_persist_and_load($("#import-data").val())
 				candidates.render();
 				init_pages();	

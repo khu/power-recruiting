@@ -48,18 +48,18 @@ _is_single_group : function() {
 	return is_single_group;
 },
 render:function() {
-	var group;
+	var groupId;
 	if (this._is_single_group()) {
-		group = $("#" + this.group + "-panel");
+		groupId = this.group + "-panel";
 	} else {
-		group = $("#all-groups");
+		groupId = "all-groups";
 	}
 	var css = "male";
 	if (this.is_female()) {
 		css = "female"
 	}
 	var text = "<div id=" + this.id + " class='candidate  ui-widget-content ui-draggable " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
-	var obj = $("#" + group.attr('id') + " .grade" + this.grade);
+	var obj = $("#" + groupId + " .grade" + this.grade);
 	obj.append(text)
 },
 findExistingGroup:function() {

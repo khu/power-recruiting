@@ -62,13 +62,15 @@ function index_in_scople(parent, current_elem, select) {
 	return -1;
 }
 
-function import_candidates(data_from){
-	if (data_from.val().trim() == "") {
+function import_candidates(data_from, groupsCount){
+	if (data_from.trim() == "") {
 		return;
 	}
 
-	var candidates = new Candidates()
-	candidates.fromCSV(data_from.val())
+	getLocalStorage().setItem('groupsCount', groupsCount);
+
+	var candidates = new Candidates(groupsCount)
+	candidates.fromCSV(data_from)
 	candidates.persist();
 	candidates.render();
 	init_pages();
@@ -89,7 +91,7 @@ function init_pages() {
 			accept: ".candidate",
 			activeClass: "ui-state-highlight",
 			drop: function( event, ui ) {
-				var candidates = new Candidates();
+				var candidates = new Candidates(getLocalStorage().getItem('groupsCount'));
 				candidates.load()
 				candidates.rank(ui.draggable,$(this));
 			}
@@ -97,7 +99,45 @@ function init_pages() {
 }
 
 function export_candidates(data_to){
-	var candidates = new Candidates()
+	var candidates = new Candidates(getLocalStorage().getItem('groupsCount'))
 	candidates.load();
 	data_to.val(candidates.export_as())
+}
+
+function statistic_draw() {
+	var candidates = new Candidates(getLocalStorage().getItem('groupsCount'));
+	candidates.load();
+
+	var diversityPie = new RGraph.Pie('diversity-chart-canvas', [candidates.females_amount(),candidates.males_amount()]);
+	var females_label = candidates.females_percentage() + "%";
+	var male_label = candidates.males_percentage() + "%";
+
+	diversityPie.Set('chart.labels', ['Female (' + females_label + ')', 'Male (' + male_label + ')']);
+	diversityPie.Set('chart.gutter', 30);
+	diversityPie.Set('chart.shadow', false);
+	diversityPie.Set('chart.tooltips.effect', 'contract');
+	diversityPie.Set('chart.tooltips', [
+		candidates.females_amount() + ' of ' + candidates.size(),
+		candidates.males_amount() + ' of '  + candidates.size(),
+	]);
+	diversityPie.Set('chart.highlight.style', '3d');
+	diversityPie.Set('chart.zoom.hdir', 'center');
+	diversityPie.Set('chart.zoom.vdir', 'up');
+	diversityPie.Set('chart.labels.sticks', true);
+	diversityPie.Set('chart.labels.sticks.color', '#aaa');
+	diversityPie.Set('chart.contextmenu', [['Zoom in', RGraph.Zoom]]);
+	diversityPie.Set('chart.linewidth', 5);
+	diversityPie.Set('chart.labels.sticks', true);
+	diversityPie.Set('chart.strokestyle', 'transparent');
+	diversityPie.Set('chart.colors', ["pink", "#CCF"]);
+	diversityPie.Draw();
+}
+
+function load_group_count() {
+	var groupsCount = getLocalStorage().getItem('groupsCount');
+	if (groupsCount == null) {
+		getLocalStorage().setItem('groupsCount', $("#groups-count").val());
+	} else {
+		$("#groups-count").val(groupsCount);
+	}
 }
