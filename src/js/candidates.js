@@ -190,6 +190,7 @@ var Candidates = $.Class.create({
 		} 
 		else if (this.fromAllGroups(candidate) && this.toGradeForGroup(grade)){
 			$("#single-group > div").find("#"+candidate.attr("id")).remove();
+			$("#single-group > div").find("#"+candidate.attr("id") + "_last").remove();
 			candidate.appendTo(grade).fadeIn();
 		}
 		

@@ -16,6 +16,8 @@ initialize: function(obj) {
 	this.w_answered = obj[9]  - 0;
 	this.group = obj[10];
 	this.grade = obj[11];
+	this.last_grade = obj[12];
+	this.last_group = obj[13];
 },
 gender_str:function() {
 	return this.is_female() ? "Female" : "Male"
@@ -32,7 +34,12 @@ updateGrade:function(grade) {
 	var candidate = this;
 	$(all_grade).each(function(index, elem) {
 		if (grade.indexOf(elem) > -1) {
-			candidate.grade = elem.replace("grade", "")
+			if(candidate._is_single_group() && candidate.last_grade == undefined){
+				candidate.last_grade = candidate.grade;
+				candidate.last_group = candidate.group;
+			}
+			candidate.grade = elem.replace("grade", "");
+			
 		}
 	})
 },
@@ -61,6 +68,12 @@ render:function() {
 	var text = "<div id=" + this.id + " class='candidate  ui-widget-content ui-draggable " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
 	var obj = $("#" + groupId + " .grade" + this.grade);
 	obj.append(text)
+	if(groupId == "all-groups"){
+		css += " cboxElement nodrag"
+		var text = "<div id=" + this.id + "_last class='candidate " + css +"' aria-disabled='true'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
+		var obj = $("#" + this.last_group + "-panel" + " .grade" + this.last_grade);
+		obj.append(text)
+	}
 },
 findExistingGroup:function() {
 	return $("#" + this.group);
@@ -81,7 +94,7 @@ export_as: function() {
 	+ this.logic_answered + "\t"
 	+ this.w_correct  + "\t"
 	+ this.w_answered + "\t"
-	+ this.grade; + "\t"
+	+ this.grade;
 	return str;
 },
 toString: function() {
@@ -96,7 +109,12 @@ toString: function() {
 	+ this.w_correct  + "\t"
 	+ this.w_answered + "\t"
 	+ this.group + "\t"
-	+ this.grade; + "\t"
+	+ this.grade;
+	if(!this._is_single_group()){
+		str +="\t"
+		+ this.last_grade + "\t"
+		+ this.last_group;
+	}
 	return str;
 }
 });
