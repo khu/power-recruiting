@@ -56,5 +56,7 @@ var Profile = $.Class.create({
 								.replace("${id}", this.candidate.id)
 		$("#profiles").append($(html))
 		$("#" + this.candidate.id).colorbox({width:"50%", inline:true, href:"#profile-" + this.candidate.id});
+		$("#" + this.candidate.id + "_last").colorbox({width:"50%", inline:true, href:"#profile-" + this.candidate.id});
+		
 	}
 });
