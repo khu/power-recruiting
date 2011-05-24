@@ -130,6 +130,7 @@ var Candidates = $.Class.create({
 			candidate.render()
 		}
 		new Profiles(this).render();
+
 	},
 	clean_init:function() {
 		$(".candidate").remove();
@@ -174,8 +175,10 @@ var Candidates = $.Class.create({
 		candidateInstance.updateGrade(grade.attr('class').toString())
 		this.persist()
 
+
 		if (this.fromSingleGroup(candidate) && this.toGradeInAll(grade)) {
-			var candidateClone = candidate.clone();
+			var candidateClone = candidate.clone(true, true);
+			// candidateClone.attr('id', candidate.attr("id") + "_last");
 			candidate.draggable("disable");
 			candidateClone.draggable({
 				revert: "invalid", // when not dropped, the item will revert back to its initial position
@@ -183,6 +186,7 @@ var Candidates = $.Class.create({
 				cursor: "move"
 			});
 			candidateClone.appendTo(grade).fadeIn();
+			// $("#" + this.candidate.id +", #" + this.candidate.id + "_last").colorbox({width:"50%", inline:true, href:"#profile-" + this.candidate.id});
 		} 
 		else if ((this.fromSingleGroup(candidate) && this.toGradeForGroup(grade))
 				|| (this.fromAllGroups(candidate) && this.toGradeInAll(grade))){
@@ -193,7 +197,6 @@ var Candidates = $.Class.create({
 			$("#single-group > div").find("#"+candidate.attr("id") + "_last").remove();
 			candidate.appendTo(grade).fadeIn();
 		}
-		
 	},
 	fromSingleGroup:function(item){
 		return item.parent().parent().parent().attr("id") == "single-group";

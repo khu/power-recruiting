@@ -8,6 +8,7 @@ var Profiles = $.Class.create({
 		for (var i = 0; i< length;i++) {
 			new Profile(this.candidates.get(i)).render();
 		}
+		
 	},
 	clean:function() {
 		$("#profiles").empty()

@@ -501,6 +501,24 @@ input[type="number"] {
 	font-weight: bold;
 }
 
+.profile-form-field-container textarea{
+	font-size: 0.8em;
+	font-weight: bold;
+	border:0;
+	display: block;
+	background-color: white;
+	-webkit-rtl-ordering: logical;
+	-webkit-user-select: text;
+	-webkit-box-orient: vertical;
+	resize: auto;
+	cursor: auto;
+	padding: 0;
+	margin: 0;
+	width: 100%;
+
+
+}
+
 .profile-form-field-container {
 	-webkit-box-flex: 1;
 	display: block;

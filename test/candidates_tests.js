@@ -15,7 +15,7 @@ test("should parse the single candidate", function() {
 	equals("G-1-1", candidate.group);
 	equals('D', candidate.grade);
 	
-	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1-1	D", candidates.toCSV());
+	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1-1	D	", candidates.toCSV());
 });
 
 test("should parse multiple candidates", function() {

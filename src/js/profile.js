@@ -44,6 +44,14 @@ var Profile = $.Class.create({
 						+ '<span>${wonderlic}</span>'
 					+ '</div>'
 				+ '</div>'
+				+ '<div class="profile-field">'
+					+ '<div class="profile-form-label">'
+						+ '<span>Comments</span>'
+					+ '</div>'
+					+ '<div class="profile-form-field-container">'
+						+ '<textarea id="comments_${id}">${comments}</textarea>'
+					+ '</div>'
+				+ '</div>'
 			+ '</div>'
 		+ '</div>';
 	},
@@ -54,9 +62,16 @@ var Profile = $.Class.create({
 								.replace("${gender}", this.candidate.gender_str())
 								.replace("${wonderlic}", this.candidate.w_correct)
 								.replace("${id}", this.candidate.id)
+								.replace("${id}", this.candidate.id)
+								.replace("${comments}", this.candidate.comments)
 		$("#profiles").append($(html))
-		$("#" + this.candidate.id).colorbox({width:"50%", inline:true, href:"#profile-" + this.candidate.id});
-		$("#" + this.candidate.id + "_last").colorbox({width:"50%", inline:true, href:"#profile-" + this.candidate.id});
-		
+		$("#" + this.candidate.id +", #" + this.candidate.id + "_last").colorbox({width:"50%", inline:true, href:"#profile-" + this.candidate.id});
+		var cur_candidate = this.candidate;
+		$("#" + this.candidate.id).bind('cbox_closed', function() {
+			var comments = $("#comments_" + cur_candidate.id).val();
+			if(comments != undefined){
+				cur_candidate.comments = comments;
+			}
+		});
 	}
 });

@@ -16,8 +16,15 @@ initialize: function(obj) {
 	this.w_answered = obj[9]  - 0;
 	this.group = obj[10];
 	this.grade = obj[11];
-	this.last_grade = obj[12];
-	this.last_group = obj[13];
+	this.comments = obj[12];
+	this.last_grade = obj[13];
+	this.last_group = obj[14];
+	if(this.comments == undefined){
+		this.comments = "";
+	}else{
+		this.comments = this.comments.replace(/##/g, " ");
+	}
+
 },
 gender_str:function() {
 	return this.is_female() ? "Female" : "Male"
@@ -74,6 +81,7 @@ render:function() {
 		var obj = $("#" + this.last_group + "-panel" + " .grade" + this.last_grade);
 		obj.append(text)
 	}
+
 },
 findExistingGroup:function() {
 	return $("#" + this.group);
@@ -94,7 +102,10 @@ export_as: function() {
 	+ this.logic_answered + "\t"
 	+ this.w_correct  + "\t"
 	+ this.w_answered + "\t"
-	+ this.grade;
+	+ this.grade + "\t"
+	+ this.comments.replace(/ /g, "##") + "\t"
+	+ this.last_grade + "\t"
+	+ this.last_group;
 	return str;
 },
 toString: function() {
@@ -109,7 +120,8 @@ toString: function() {
 	+ this.w_correct  + "\t"
 	+ this.w_answered + "\t"
 	+ this.group + "\t"
-	+ this.grade;
+	+ this.grade + "\t"
+	+ this.comments.replace(/ /g, "##");
 	if(!this._is_single_group()){
 		str +="\t"
 		+ this.last_grade + "\t"
