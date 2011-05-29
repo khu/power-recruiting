@@ -128,5 +128,9 @@ toString: function() {
 		+ this.last_group;
 	}
 	return str;
+},
+persist: function(){
+	var csv_str = getLocalStorage().getItem('profile-' + this.id);
+	getLocalStorage().setItem('profile-' + this.id, this.toCSV());
 }
 });

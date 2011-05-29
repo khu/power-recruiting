@@ -39,6 +39,7 @@ var Candidates = $.Class.create({
 			if (objs[i].indexOf("姓名") > -1){
 				continue;
 			}
+
 			this.init_for_the_first_time(objs[i], i)
 			this._candidates.push(new Candidate(objs[i]))
 		}
@@ -48,6 +49,7 @@ var Candidates = $.Class.create({
 			this.init_id(fieldsOfCandidate, i);
 			this.init_group(fieldsOfCandidate);
 			this.init_grade(fieldsOfCandidate);
+			this.init_comments(fieldsOfCandidate);
 		};
 	},
 	init_id:function(fieldsOfCandidate, i) {
@@ -63,9 +65,14 @@ var Candidates = $.Class.create({
 		var day = Math.floor(groupIndex / groupsPerDay) + 1;
 		
 		fieldsOfCandidate[10] = "G-" + day + "-" + group;
+		fieldsOfCandidate[14] = '';
 	},
 	init_grade:function(fieldsOfCandidate) {
 		fieldsOfCandidate[11] = 'D'
+		fieldsOfCandidate[13] = ''
+	},
+	init_comments:function(fieldsOfCandidate) {
+		fieldsOfCandidate[12] = ''
 	},
 	find:function(id) {
 		var size = this._candidates.length
@@ -137,10 +144,24 @@ var Candidates = $.Class.create({
 		$("#rank .sub-tab-button-container").remove();
 	},
 	persist:function() {
-		getLocalStorage().setItem('candidates', this.toCSV())
+		if(!getLocalStorage().getItem('candidates_index')){
+			this.init_perist_data();
+		}
+		var size = this._candidates.length
+			for (var i = 0; i < size; i++) {
+				this._candidates[i].persist();
+			}		
+	},
+	init_perist_data:function(){
+		var profile_index_str = ''
+		var size = this._candidates.length
+		for (var i = 0; i < size; i++) {
+			profile_index_str += this._candidates[i].id + ','
+		}
+		getLocalStorage().setItem('candidates_index', profile_index_str.replace(/,$/, ''));
 	},
 	try_persist_and_load:function(html) {
-		if (!getLocalStorage().getItem('candidates')) {
+		if (!getLocalStorage().getItem('candidates_index')) {
 			this.fromCSV(html);
 			this.persist();
 		} else {
@@ -166,19 +187,31 @@ var Candidates = $.Class.create({
 		return str;	
 	},
 	load:function() {
-		this.fromCSV(getLocalStorage().getItem('candidates'));
+		var profile_index_str = getLocalStorage().getItem('candidates_index');
+
+		profiles_id_array = profile_index_str.split(",")
+		var size = profiles_id_array.length
+		for(var i = 0; i < size; i++) {
+			var CSV_data = getLocalStorage().getItem('profile-' + profiles_id_array[i]);
+			if(CSV_data == null){
+				continue;
+			}
+			obj_array = CSV_data.split(/\s/);
+			this.init_for_the_first_time(obj_array, i)
+			var candidate = new Candidate(obj_array);
+			this._candidates.push(candidate)
+		}
 	},
     rank:function($item, grade) {
 		var candidate = $item;
 
 		var candidateInstance = this.find($item.attr('id'));
 		candidateInstance.updateGrade(grade.attr('class').toString())
-		this.persist()
+		candidateInstance.persist()
 
 
 		if (this.fromSingleGroup(candidate) && this.toGradeInAll(grade)) {
 			var candidateClone = candidate.clone(true, true);
-			// candidateClone.attr('id', candidate.attr("id") + "_last");
 			candidate.draggable("disable");
 			candidateClone.draggable({
 				revert: "invalid", // when not dropped, the item will revert back to its initial position
@@ -186,7 +219,6 @@ var Candidates = $.Class.create({
 				cursor: "move"
 			});
 			candidateClone.appendTo(grade).fadeIn();
-			// $("#" + this.candidate.id +", #" + this.candidate.id + "_last").colorbox({width:"50%", inline:true, href:"#profile-" + this.candidate.id});
 		} 
 		else if ((this.fromSingleGroup(candidate) && this.toGradeForGroup(grade))
 				|| (this.fromAllGroups(candidate) && this.toGradeInAll(grade))){

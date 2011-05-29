@@ -71,6 +71,7 @@ var Profile = $.Class.create({
 			var comments = $("#comments_" + cur_candidate.id).val();
 			if(comments != undefined){
 				cur_candidate.comments = comments;
+				cur_candidate.persist();
 			}
 		});
 	}

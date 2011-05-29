@@ -70,7 +70,7 @@ function import_candidates(data_from, groupsCount){
 	getLocalStorage().setItem('groupsCount', groupsCount);
 
 	var candidates = new Candidates(groupsCount)
-	candidates.fromCSV(data_from)
+	candidates.fromCSV(data_from);
 	candidates.persist();
 	candidates.render();
 	init_pages();
