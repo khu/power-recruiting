@@ -79,16 +79,13 @@ render:function() {
 	} else {
 		groupId = "all-groups";
 	}
-	var css = "male";
-	if (this.is_female()) {
-		css = "female"
-	}
-	var text = "<div id=" + this.id + " class='candidate  ui-widget-content ui-draggable " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
+	var css = "ui-widget-content " + (this.is_female() ? "female" : "male");
+	var text = "<div id=" + this.id + " class='candidate ui-draggable " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
 	var obj = $("#" + groupId + " .grade" + this.grade);
 	obj.append(text)
 	if(groupId == "all-groups"){
-		css += " cboxElement nodrag"
-		var text = "<div id=" + this.id + "_last class='candidate " + css +"' aria-disabled='true'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
+		css += " cboxElement undraggable"
+		var text = "<div id=" + this.id + "_last class='candidate " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
 		var obj = $("#" + this.group + " .grade" + this.last_grade);
 		obj.append(text)
 	}
@@ -136,7 +133,6 @@ toString: function() {
 	return str;
 },
 persist: function(){
-	// var csv_str = getLocalStorage().getItem('profile-' + this.id);
 	getLocalStorage().setItem('profile-' + this.id, this.toString());
 }
 });

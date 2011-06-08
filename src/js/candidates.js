@@ -196,7 +196,7 @@ var Candidates = $.Class.create({
 				continue;
 			}
 			obj_array = CSV_data.split("\t");
-			// this.init_for_the_first_time(obj_array, i)
+
 			var candidate = new Candidate(obj_array);
 			this._candidates.push(candidate)
 		}
@@ -212,12 +212,13 @@ var Candidates = $.Class.create({
 		if (this.fromSingleGroup(candidate) && this.toGradeInAll(grade)) {
 			var candidateClone = candidate.clone(true, true);
 			candidate.draggable("disable");
-			candidateClone.draggable({
+			candidateClone.appendTo(grade).fadeIn();
+			//set draggable, cannot work currently.[shaobo]
+			$(".candidate").draggable({
 				revert: "invalid", // when not dropped, the item will revert back to its initial position
 				helper: "clone",
 				cursor: "move"
 			});
-			candidateClone.appendTo(grade).fadeIn();
 		} 
 		else if ((this.fromSingleGroup(candidate) && this.toGradeForGroup(grade))
 				|| (this.fromAllGroups(candidate) && this.toGradeInAll(grade))){

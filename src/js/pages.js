@@ -87,7 +87,7 @@ function init_pages() {
 		cursor: "move"
 	});
 	
-	$(".nodrag").draggable("disable");
+	$(".undraggable").draggable("disable");
 	// let the trash be droppable, accepting the gallery items
 	$(".grade").droppable({
 			accept: ".candidate",
