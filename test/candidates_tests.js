@@ -15,7 +15,7 @@ test("should parse the single candidate", function() {
 	equals("G-1-1", candidate.group);
 	equals('D', candidate.grade);
 	
-	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1-1	D	", candidates.toCSV());
+	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1-1	D	##", candidates.toCSV());
 });
 
 test("should parse multiple candidates", function() {
@@ -103,7 +103,7 @@ test("should save the candidate into storage", function() {
 module("setup test", {
 	setup: function() {
 		var candidate = new Candidate([12, "马亚娜", "F","西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-		var groupid = candidate.group + '-panel';
+		var groupid = candidate.group;
 		var html = '<div id="' + groupid + '" class="group" style="">'
 					+ '<div class="grade gradeB ui-droppable"></div>'
 					+ '<div class="grade gradeD ui-droppable"></div>'
@@ -138,7 +138,7 @@ test("should first remove everything before render all", function() {
 module("setup test", {
 	setup: function() {
 		var candidate = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-		var groupid = candidate.group + '-panel';
+		var groupid = candidate.group;
 		var html = '<div id="' + groupid + '" class="group" style="">'
 					+ 	'<div class="grade gradeA"><div class="grade-bg-text">Rank 1</div></div>'
 					+ 	'<div class="grade gradeB"></div>'

@@ -16,15 +16,17 @@ initialize: function(obj) {
 	this.w_answered = obj[9]  - 0;
 	this.group = obj[10];
 	this.grade = obj[11];
-	this.comments = obj[12];
-	this.last_grade = obj[13];
-	this.last_group = obj[14];
-	if(this.comments == undefined){
-		this.comments = "";
-	}else{
-		this.comments = this.comments.replace(/##/g, " ");
+	this.comments = this.getCommentsContent(obj[12]);
+	this.last_grade = obj[13] || this.grade;
+},
+getCommentsContent: function(comments){
+	if (!comments || comments.length < 2) {
+		return "";
 	}
-
+	return comments.substring(1, comments.length - 1);
+},
+wrapCommentsContent: function(comments){
+	return "#" + comments + "#";
 },
 gender_str:function() {
 	return this.is_female() ? "Female" : "Male"
@@ -41,14 +43,23 @@ updateGrade:function(grade) {
 	var candidate = this;
 	$(all_grade).each(function(index, elem) {
 		if (grade.indexOf(elem) > -1) {
-			if(candidate._is_single_group() && candidate.last_grade == undefined){
+			var newGrade = elem.replace("grade", "");
+			if(candidate._is_single_group()){
 				candidate.last_grade = candidate.grade;
-				candidate.last_group = candidate.group;
+			} else {
+				candidate.last_grade = newGrade;
 			}
-			candidate.grade = elem.replace("grade", "");
-			
+			candidate.grade = newGrade;
 		}
 	})
+},
+updateGroup: function(grade) {
+	var candidate = this;
+	var groupId = grade.parent().attr('id').toString();
+	
+	if (groupId != "all-groups") {
+		candidate.group = groupId;
+	}
 },
 _is_single_group : function() {
 	var all_grade = ["A","B", "C", "D"];
@@ -64,7 +75,7 @@ _is_single_group : function() {
 render:function() {
 	var groupId;
 	if (this._is_single_group()) {
-		groupId = this.group + "-panel";
+		groupId = this.group;
 	} else {
 		groupId = "all-groups";
 	}
@@ -78,7 +89,7 @@ render:function() {
 	if(groupId == "all-groups"){
 		css += " cboxElement nodrag"
 		var text = "<div id=" + this.id + "_last class='candidate " + css +"' aria-disabled='true'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
-		var obj = $("#" + this.last_group + "-panel" + " .grade" + this.last_grade);
+		var obj = $("#" + this.group + " .grade" + this.last_grade);
 		obj.append(text)
 	}
 
@@ -102,10 +113,7 @@ export_as: function() {
 	+ this.logic_answered + "\t"
 	+ this.w_correct  + "\t"
 	+ this.w_answered + "\t"
-	+ this.grade + "\t"
-	+ this.comments.replace(/ /g, "##") + "\t"
-	+ this.last_grade + "\t"
-	+ this.last_group;
+	+ this.grade;
 	return str;
 },
 toString: function() {
@@ -121,16 +129,14 @@ toString: function() {
 	+ this.w_answered + "\t"
 	+ this.group + "\t"
 	+ this.grade + "\t"
-	+ this.comments.replace(/ /g, "##");
+	str += this.wrapCommentsContent(this.comments);
 	if(!this._is_single_group()){
-		str +="\t"
-		+ this.last_grade + "\t"
-		+ this.last_group;
+		str += "\t" + this.last_grade;
 	}
 	return str;
 },
 persist: function(){
-	var csv_str = getLocalStorage().getItem('profile-' + this.id);
-	getLocalStorage().setItem('profile-' + this.id, this.toCSV());
+	// var csv_str = getLocalStorage().getItem('profile-' + this.id);
+	getLocalStorage().setItem('profile-' + this.id, this.toString());
 }
 });

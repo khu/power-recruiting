@@ -1,7 +1,7 @@
 module("setup test", {
 	setup: function() {
-		var candidate = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "D", "G-1-1", "good##comments"]);
-		var groupid = candidate.group + '-panel';
+		var candidate = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "D", "G-1-1", "#good comments#"]);
+		var groupid = candidate.group;
 		var html = '<div id="profiles"></div>'
 		$("#qunit-fixture").append($(html));
 		var profile = new Profile(candidate);

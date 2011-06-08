@@ -65,14 +65,13 @@ var Candidates = $.Class.create({
 		var day = Math.floor(groupIndex / groupsPerDay) + 1;
 		
 		fieldsOfCandidate[10] = "G-" + day + "-" + group;
-		fieldsOfCandidate[14] = '';
 	},
 	init_grade:function(fieldsOfCandidate) {
 		fieldsOfCandidate[11] = 'D'
 		fieldsOfCandidate[13] = ''
 	},
 	init_comments:function(fieldsOfCandidate) {
-		fieldsOfCandidate[12] = ''
+		fieldsOfCandidate[12] = '##'
 	},
 	find:function(id) {
 		var size = this._candidates.length
@@ -116,8 +115,8 @@ var Candidates = $.Class.create({
 				selected = "sub-tab-button-active";
 				display = "";
 			}
-			var open_panel_id = 'open-' +  candidate.group + '-panel';
-			var panel_id = candidate.group + '-panel';
+			var open_panel_id = 'open-' +  candidate.group;
+			var panel_id = candidate.group;
 			if (!$("#" + open_panel_id).exists()) {
 				var template = '<div class="sub-tab-button-container ' + selected + '">'
 					+ '<span class="sub-tab-button" id="' + open_panel_id + '">' + candidate.group + '</span>'
@@ -196,8 +195,8 @@ var Candidates = $.Class.create({
 			if(CSV_data == null){
 				continue;
 			}
-			obj_array = CSV_data.split(/\s/);
-			this.init_for_the_first_time(obj_array, i)
+			obj_array = CSV_data.split("\t");
+			// this.init_for_the_first_time(obj_array, i)
 			var candidate = new Candidate(obj_array);
 			this._candidates.push(candidate)
 		}
@@ -207,8 +206,8 @@ var Candidates = $.Class.create({
 
 		var candidateInstance = this.find($item.attr('id'));
 		candidateInstance.updateGrade(grade.attr('class').toString())
+		candidateInstance.updateGroup(grade);
 		candidateInstance.persist()
-
 
 		if (this.fromSingleGroup(candidate) && this.toGradeInAll(grade)) {
 			var candidateClone = candidate.clone(true, true);

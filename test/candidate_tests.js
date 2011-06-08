@@ -29,17 +29,17 @@ test("should return empty string if the user's grade has not been changed to ove
 
 });
 
-test("should return all candidate data if the user's grade has  been changed to overall grade", function() {
+test("should return all candidate data if the user's grade has been changed to overall grade", function() {
 	var candidate = new Candidate([52, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
 	candidate.grade = 1
-	equals("马亚娜	女	西安交通大学	信息工程	13772148940	12	11	26	47	1		undefined	undefined", candidate.export_as())
+	equals("马亚娜	女	西安交通大学	信息工程	13772148940	12	11	26	47	1", candidate.export_as())
 
 });
 
 module("setup test", {
 	setup: function() {
 		var candidate = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-		var groupid = candidate.group + '-panel';
+		var groupid = candidate.group;
 		var html = '<div id="' + groupid + '" class="group" style="">'
 					+ '<div class="grade gradeB ui-droppable"></div>'
 					+ '<div class="grade gradeD ui-droppable"></div>'
