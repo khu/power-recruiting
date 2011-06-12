@@ -117,16 +117,19 @@ var Candidates = $.Class.create({
 			}
 			var open_panel_id = 'open-' +  candidate.group;
 			var panel_id = candidate.group;
-			if (!$("#" + open_panel_id).exists()) {
+			if ($("#" + open_panel_id).length == 0) {
 				var template = '<div class="sub-tab-button-container ' + selected + '">'
 					+ '<span class="sub-tab-button" id="' + open_panel_id + '">' + candidate.group + '</span>'
 				+ '</div>'
 				var rendered = $(template);
 				parent.append(rendered);
-				var content = '<div id="' + panel_id + '" style="' + display + '"></div>';
-				$("#single-group").append($(content));
+				
+				if ($('#' + panel_id).length == 0) {
+					var content = '<div id="' + panel_id + '" style="' + display + '"></div>';
+					$("#single-group").append($(content));
+				}
 			}
-			if (!$("#" + panel_id + " .grade-bg-text").exists()) {
+			if ($("#" + panel_id + " .grade-bg-text").length == 0) {
 				var content = '<div class="grade gradeA"><div class="grade-bg-text">1</div></div>'
 					+ '<div class="grade gradeB"><div class="grade-bg-text">2</div></div>'
 					+ '<div class="grade gradeC"><div class="grade-bg-text">3</div></div>'
