@@ -80,15 +80,9 @@ function init_pages() {
 	$(".sub-tab-button-container").click(function(){
 		switch_to_group($(this).find('.sub-tab-button'));
 	});
-	// let the gallery items be draggable
-	$(".candidate").draggable({
-		revert: "invalid", // when not dropped, the item will revert back to its initial position
-		helper: "clone",
-		cursor: "move"
-	});
 	
-	$(".undraggable").draggable("disable");
-	// let the trash be droppable, accepting the gallery items
+	init_drag_ability();
+	
 	$(".grade").droppable({
 			accept: ".candidate",
 			activeClass: "ui-state-highlight",
@@ -98,6 +92,15 @@ function init_pages() {
 				candidates.rank(ui.draggable,$(this));
 			}
 	});
+}
+
+function init_drag_ability() {
+	$(".candidate").draggable({
+		revert: "invalid",
+		helper: "clone"
+	});
+	
+	$(".undraggable").draggable("disable");
 }
 
 function export_candidates(data_to){

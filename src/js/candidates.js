@@ -213,15 +213,13 @@ var Candidates = $.Class.create({
 		candidateInstance.persist()
 
 		if (this.fromSingleGroup(candidate) && this.toGradeInAll(grade)) {
-			var candidateClone = candidate.clone(true, true);
-			candidate.draggable("disable");
-			candidateClone.appendTo(grade).fadeIn();
-			//set draggable, cannot work currently.[shaobo]
-			$(".candidate").draggable({
-				revert: "invalid", // when not dropped, the item will revert back to its initial position
-				helper: "clone",
-				cursor: "move"
-			});
+			var id = candidate.attr('id');
+			candidate.remove();//remove original card
+			$('#'+id).remove();//remove dragging card
+			
+			candidateInstance.render();
+			new Profile(candidateInstance).render();
+			init_drag_ability();
 		} 
 		else if ((this.fromSingleGroup(candidate) && this.toGradeForGroup(grade))
 				|| (this.fromAllGroups(candidate) && this.toGradeInAll(grade))){
