@@ -63,18 +63,21 @@ var Profile = $.Class.create({
 								.replace("${logic}", this.candidate.logic_correct)
 								.replace("${gender}", this.candidate.gender_str())
 								.replace("${wonderlic}", this.candidate.w_correct)
-								.replace("${id}", this.candidate.id)
+								.replace("${id}", this.candidate.id)	//replace first ${id} for profile id
+								.replace("${id}", this.candidate.id)	//replace second ${id} for comments id
 								.replace("${comments}", this.candidate.comments);
 			$("#profiles").append($(html))
 		}
 		
-		$("#" + this.candidate.id +", #" + this.candidate.id + "_last").colorbox({width:"50%", inline:true, href:"#profile-" + this.candidate.id});
-		var cur_candidate = this.candidate;
-		$("#" + this.candidate.id).bind('cbox_closed', function() {
-			var comments = $("#comments_" + cur_candidate.id).val();
+		var candidateCards = $("#" + this.candidate.id +", #" + this.candidate.id + "_last");
+		candidateCards.colorbox({width:"50%", inline:true, href:"#profile-" + this.candidate.id});
+		
+		var currentCandidate = this.candidate;
+		candidateCards.bind('cbox_cleanup', function() {
+			var comments = $("#comments_" + currentCandidate.id).val();
 			if(comments != undefined){
-				cur_candidate.comments = comments;
-				cur_candidate.persist();
+				currentCandidate.comments = comments;
+				currentCandidate.persist();
 			}
 		});
 	}

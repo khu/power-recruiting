@@ -73,6 +73,10 @@ _is_single_group : function() {
 	return is_single_group;
 },
 render:function() {
+	this.renderItself();
+	this.renderItsLast();
+},
+renderItself: function() {
 	var groupId;
 	if (this._is_single_group()) {
 		groupId = this.group;
@@ -83,13 +87,15 @@ render:function() {
 	var text = "<div id=" + this.id + " class='candidate ui-draggable " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
 	var obj = $("#" + groupId + " .grade" + this.grade);
 	obj.append(text)
-	if(groupId == "all-groups"){
+},
+renderItsLast: function() {
+	var css = " cboxElement ui-widget-content " + (this.is_female() ? "female" : "male");
+	if (!this._is_single_group()){
 		css += " undraggable "
 		var text = "<div id=" + this.id + "_last class='candidate " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
 		var obj = $("#" + this.group + " .grade" + this.last_grade);
 		obj.append(text)
 	}
-
 },
 findExistingGroup:function() {
 	return $("#" + this.group);

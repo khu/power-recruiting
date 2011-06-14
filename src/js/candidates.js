@@ -214,10 +214,11 @@ var Candidates = $.Class.create({
 
 		if (this.fromSingleGroup(candidate) && this.toGradeInAll(grade)) {
 			var id = candidate.attr('id');
-			candidate.remove();//remove original card
-			$('#'+id).remove();//remove dragging card
+			candidate.attr('id', id+'_last');
+			candidate.addClass('undraggable');
+			$('#'+id).remove();
+			candidateInstance.renderItself();
 			
-			candidateInstance.render();
 			new Profile(candidateInstance).render();
 			init_drag_ability();
 		} 
