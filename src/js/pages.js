@@ -82,16 +82,9 @@ function init_pages() {
 	});
 	
 	init_drag_ability();
+	init_drop_ability();
 	
-	$(".grade").droppable({
-			accept: ".candidate",
-			activeClass: "ui-state-highlight",
-			drop: function( event, ui ) {
-				var candidates = new Candidates(getLocalStorage().getItem('groupsCount'));
-				candidates.load()
-				candidates.rank(ui.draggable,$(this));
-			}
-	});
+	init_profile_binding();
 }
 
 function init_drag_ability() {
@@ -103,15 +96,48 @@ function init_drag_ability() {
 	$(".undraggable").draggable("disable");
 }
 
-function export_candidates(data_to){
-	var candidates = new Candidates(getLocalStorage().getItem('groupsCount'))
+function init_drop_ability() {
+	$(".grade").droppable({
+		accept: ".candidate",
+		activeClass: "ui-state-highlight",
+		drop: function( event, ui ) {
+			var candidates = get_candidates_instance();
+			candidates.rank(ui.draggable,$(this));
+		}
+	});
+}
+
+function init_profile_binding() {
+	$(".candidate").click(function(){
+		var candidateId = $(this).attr('id').replace('_last', '');
+		$(this).colorbox({width:"50%", inline:true, href:"#profile-" + candidateId});
+		
+		$(this).bind('cbox_cleanup', function() {
+			var comments = $("#comments_" + candidateId).val();
+			if(comments != undefined){
+				var candidates = get_candidates_instance();
+				
+				var candidate = candidates.find(candidateId);
+				candidate.comments = comments;
+				candidate.persist();
+			}
+		});
+	});
+}
+
+function get_candidates_instance() {
+	var candidates = new Candidates(getLocalStorage().getItem('groupsCount'));
 	candidates.load();
+	return candidates;
+}
+
+function export_candidates(data_to){
+	var candidates = get_candidates_instance();
 	data_to.val(candidates.export_as())
 }
 
 function statistic_draw() {
-	var candidates = new Candidates(getLocalStorage().getItem('groupsCount'));
-	candidates.load();
+	var candidates = get_candidates_instance();
 
 	var diversityPie = new RGraph.Pie('diversity-chart-canvas', [candidates.females_amount(),candidates.males_amount()]);
 	var females_label = candidates.females_percentage() + "%";

@@ -83,13 +83,13 @@ renderItself: function() {
 	} else {
 		groupId = "all-groups";
 	}
-	var css = " cboxElement ui-widget-content " + (this.is_female() ? "female" : "male");
+	var css = " ui-widget-content " + (this.is_female() ? "female" : "male");
 	var text = "<div id=" + this.id + " class='candidate ui-draggable " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
 	var obj = $("#" + groupId + " .grade" + this.grade);
 	obj.append(text)
 },
 renderItsLast: function() {
-	var css = " cboxElement ui-widget-content " + (this.is_female() ? "female" : "male");
+	var css = " ui-widget-content " + (this.is_female() ? "female" : "male");
 	if (!this._is_single_group()){
 		css += " undraggable "
 		var text = "<div id=" + this.id + "_last class='candidate " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";

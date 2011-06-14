@@ -57,28 +57,19 @@ var Profile = $.Class.create({
 	},
 	render:function() {
 		
-		if($('#profile-'+this.candidate.id).parent().attr('id') != "profiles") {
-			var html = this.template.replace("${name}", this.candidate.name)
-								.replace("${college}", this.candidate.college)
-								.replace("${logic}", this.candidate.logic_correct)
-								.replace("${gender}", this.candidate.gender_str())
-								.replace("${wonderlic}", this.candidate.w_correct)
-								.replace("${id}", this.candidate.id)	//replace first ${id} for profile id
-								.replace("${id}", this.candidate.id)	//replace second ${id} for comments id
-								.replace("${comments}", this.candidate.comments);
-			$("#profiles").append($(html))
+		var parentId = $('#profile-'+this.candidate.id).parent().attr('id');
+		if(parentId == "profiles") {
+			return;
 		}
 		
-		var candidateCards = $("#" + this.candidate.id +", #" + this.candidate.id + "_last");
-		candidateCards.colorbox({width:"50%", inline:true, href:"#profile-" + this.candidate.id});
-		
-		var currentCandidate = this.candidate;
-		candidateCards.bind('cbox_cleanup', function() {
-			var comments = $("#comments_" + currentCandidate.id).val();
-			if(comments != undefined){
-				currentCandidate.comments = comments;
-				currentCandidate.persist();
-			}
-		});
+		var html = this.template.replace("${name}", this.candidate.name)
+							.replace("${college}", this.candidate.college)
+							.replace("${logic}", this.candidate.logic_correct)
+							.replace("${gender}", this.candidate.gender_str())
+							.replace("${wonderlic}", this.candidate.w_correct)
+							.replace("${id}", this.candidate.id)	//replace first ${id} for profile id
+							.replace("${id}", this.candidate.id)	//replace second ${id} for comments id
+							.replace("${comments}", this.candidate.comments);
+		$("#profiles").append($(html))
 	}
 });

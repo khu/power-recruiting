@@ -216,7 +216,8 @@ var Candidates = $.Class.create({
 			var id = candidate.attr('id');
 			candidate.attr('id', id+'_last');
 			candidate.addClass('undraggable');
-			$('#'+id).remove();
+			
+			$('#'+id).remove();	//remove in-dragging card
 			candidateInstance.renderItself();
 			
 			new Profile(candidateInstance).render();
