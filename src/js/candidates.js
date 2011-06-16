@@ -105,45 +105,54 @@ var Candidates = $.Class.create({
 		this.add(candidate)
 	},
 	render:function() {
-		var parent = $("#rank .sub-tab-header");
-		this.clean_init()
+		this.clean_init();
+		this.init_groups();
+		
 		for (var i = 0; i < this.size(); i++) {
-			var candidate = this.get(i);
+			var candidate = this.get(i);			
+			candidate.render();
+		}
+		
+		new Profiles(this).render();
+	},
+	init_groups: function() {
+		var groupNames = ['G-1-1','G-1-2','G-1-3','G-1-4','G-1-5',
+						  'G-2-1','G-2-2','G-2-3','G-2-4','G-2-5',
+						  'G-3-1','G-3-2'];
+
+		var parent = $("#rank .sub-tab-header");
+		var gradeElements = '<div class="grade gradeA"><div class="grade-bg-text">1</div></div>'
+			+ '<div class="grade gradeB"><div class="grade-bg-text">2</div></div>'
+			+ '<div class="grade gradeC"><div class="grade-bg-text">3</div></div>'
+			+ '<div class="grade gradeD"><div class="grade-bg-text">Pass</div></div>';
+			
+		var groupsCount = getLocalStorage().getItem('groupsCount');
+		for (var i = 0; i < groupsCount; i++) {
 			var selected = '';
 			var display = 'display:none'
 			if (i == 0) {
 				selected = "sub-tab-button-active";
 				display = "";
 			}
-			var open_panel_id = 'open-' +  candidate.group;
-			var panel_id = candidate.group;
-			if ($("#" + open_panel_id).length == 0) {
-				var template = '<div class="sub-tab-button-container ' + selected + '">'
-					+ '<span class="sub-tab-button" id="' + open_panel_id + '">' + candidate.group + '</span>'
-				+ '</div>'
-				var rendered = $(template);
-				parent.append(rendered);
-				
-				if ($('#' + panel_id).length == 0) {
-					var content = '<div id="' + panel_id + '" style="' + display + '"></div>';
-					$("#single-group").append($(content));
-				}
-			}
-			if ($("#" + panel_id + " .grade-bg-text").length == 0) {
-				var content = '<div class="grade gradeA"><div class="grade-bg-text">1</div></div>'
-					+ '<div class="grade gradeB"><div class="grade-bg-text">2</div></div>'
-					+ '<div class="grade gradeC"><div class="grade-bg-text">3</div></div>'
-					+ '<div class="grade gradeD"><div class="grade-bg-text">Pass</div></div>'
-				$("#" + panel_id).append($(content));
-			}
-			candidate.render()
-		}
-		new Profiles(this).render();
+			
+			var panel_id = groupNames[i];
+			var open_panel_id = 'open-' +  panel_id;
+		
+			var groupsHeader = '<div class="sub-tab-button-container ' + selected + '">'
+				+ '<span class="sub-tab-button" id="' + open_panel_id + '">' + panel_id + '</span>'
+			+ '</div>'
+			parent.append($(groupsHeader));
 
+			var groupElements = '<div id="' + panel_id + '" style="' + display + '"></div>';
+			$("#single-group").append($(groupElements));
+
+			$("#" + panel_id).append($(gradeElements));
+		}
 	},
 	clean_init:function() {
 		$(".candidate").remove();
 		$("#rank .sub-tab-button-container").remove();
+		$("#single-group > div").remove();
 	},
 	persist:function() {
 		if(!getLocalStorage().getItem('candidates_index')){
