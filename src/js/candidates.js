@@ -204,10 +204,8 @@ var Candidates = $.Class.create({
 			this._candidates.push(candidate)
 		}
 	},
-    rank:function($item, grade) {
-		var candidate = $item;
-
-		var candidateInstance = this.find($item.attr('id'));
+    rank:function(candidate, grade) {
+		var candidateInstance = this.find(candidate.attr('id'));
 		candidateInstance.updateGrade(grade.attr('class').toString())
 		candidateInstance.updateGroup(grade);
 		candidateInstance.persist()
@@ -220,7 +218,7 @@ var Candidates = $.Class.create({
 			$('#'+id).remove();	//remove in-dragging card
 			candidateInstance.renderItself();
 			
-			new Profile(candidateInstance).render();
+			init_profile_binding();
 			init_drag_ability();
 		} 
 		else if ((this.fromSingleGroup(candidate) && this.toGradeForGroup(grade))
