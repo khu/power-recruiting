@@ -23,14 +23,16 @@ html, body {
 
 .left-panel {
 	border-right:1px solid black;
+	border-bottom:1px solid black;
 	width: 20%;
 	float:left;
-	min-height: 725px;
+	height: 725px;
 }
 .right-panel {
+	border-bottom:1px solid black;
 	width:80%;
 	float:left;
-	min-height: 725px;
+	height: 725px;
 }
 .right-header {
 	height: 46px;
@@ -304,7 +306,8 @@ input[type="number"] {
 	border-top-right-radius: 0.4em 0.4em;
 	border-bottom-right-radius: 0.4em 0.4em;
 	border-bottom-left-radius: 0.4em 0.4em;
-
+	width: 150px;
+	height: 40px;
 }
 .form-button span{
 	-webkit-box-flex: 1;
