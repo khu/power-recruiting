@@ -120,6 +120,16 @@ html, body {
 	display: -webkit-box;
 	cursor:pointer;
 } 
+.list-sub-item {
+	position: relative;
+	background-color: #06346A;
+	padding: .4em 2.1em .4em;
+	border-bottom: 1px solid #D1D1D1;
+	border-top: 1px solid #5f5f5f;
+	min-height: 1.7em;
+	display: none;
+	cursor:pointer;
+} 
 
 .item-selected {
 	background-color: #06346A;
@@ -138,6 +148,12 @@ html, body {
 }
 .item-selected > .list-item-leaf {
 	color: white;
+}
+
+.list-sub-item-leaf {
+	font-size: .80em;
+	color: white;
+	text-shadow: rgba(0, 0, 0, 0.5) 0 -0.08em 0;				
 }
 .right-header > .title {
 	color: white;
@@ -406,15 +422,15 @@ input[type="number"] {
 	padding-top:17px;
 }
 
-#profiles {
+#profiles, #newCandidateContainer {
 	padding-left:10em;
+	display: none;
 }
 .profile {
 	width: 468px;
 	height: 366px;
 	left: 0px;
 	top: 0px; 
-
 }
 
 .profile-panel {
@@ -526,7 +542,7 @@ input[type="number"] {
 
 #label-group {
 	float: left;
-	padding: .5em;
+	padding: .8em;
 	color: white;
-	font-weight: bold;
+	font-size: .9em;
 }

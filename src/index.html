@@ -15,6 +15,7 @@
 		<script type="text/javascript" src="js/candidates.js"></script>
 		<script type="text/javascript" src="js/profile.js"></script>
 		<script type="text/javascript" src="js/profiles.js"></script>
+		<script type="text/javascript" src="js/newCandidateForm.js"></script>
 		<script type="text/javascript" src="js/pages.js"></script>
 		<script type="text/javascript" src="js/RGraph/RGraph.common.core.js" ></script>
 	    <script type="text/javascript" src="js/RGraph/RGraph.common.annotate.js" ></script>
@@ -33,7 +34,12 @@
 					<div class="list-item item-selected">
 						<span id="open-import-export" class="list-item-leaf">Import / Export</span>
 					</div>
-					<div class="list-item"><span id="open-rank" class="list-item-leaf">Rank</span></div>
+					<div class="list-item">
+						<span id="open-rank" class="list-item-leaf">Rank</span>
+					</div>
+					<div class="list-sub-item">
+						<span id="open-new-candidate" class="list-sub-item-leaf">+ New Candidate</span>
+					</div>
 					<div class="list-item" id="open-statisic-container">
 						<span id="open-satistic" class="list-item-leaf" >Satistic</span>
 					</div>
@@ -126,7 +132,7 @@
 				</div>
 				<div id="rank" style="display:none;">			
 					<div class="sub-tab-header">
-						<span id="label-group">Group</span>
+						<span id="label-group">Groups</span>
 					</div>
 					<div id="groups">
 						<div id="single-group">
@@ -155,9 +161,8 @@
 				</div>
 			</div>
 
-			<div id="profiles" style="display:none;">
-				
-			</div>
+			<div id="profiles"></div>
+			<div id="newCandidateContainer"></div>
 		</div>
 
 		
@@ -184,7 +189,7 @@
 				$("#open-statisic-container").click(function(){
 					statistic_draw();
 				});
-
+				
 				load_group_count();
 
 				var candidates = new Candidates($("#groups-count").val());

@@ -16,8 +16,11 @@ function target_panel_obj(span) {
 	return $("#" + toOpen);
 }
 function to_hide(currentNavigator, currentPanel, css) {
-	currentNavigator.parent().removeClass(css)
-	$(currentPanel).hide()
+	currentNavigator.parent().removeClass(css);
+	if (currentPanel.attr('id') == "rank") {
+		$(".list-sub-item").hide();
+	}
+	$(currentPanel).hide();
 }
 
 function to_show(targetNavigator,targetPanel,css, direction) {
@@ -25,6 +28,11 @@ function to_show(targetNavigator,targetPanel,css, direction) {
 	if(!direction) {
 		direction = "right";
 	}
+	
+	if (targetPanel.attr('id') == "rank") {
+		$(".list-sub-item").show();
+	}
+	
 	$(targetPanel).show('slide', {direction: direction}, 200)
 }
 
@@ -85,6 +93,7 @@ function init_pages() {
 	init_drop_ability();
 	
 	init_profile_binding();
+	init_new_candidate_container();
 }
 
 function init_drag_ability() {
@@ -121,6 +130,19 @@ function init_profile_binding() {
 				candidate.comments = comments;
 				candidate.persist();
 			}
+		});
+	});
+}
+
+function init_new_candidate_container() {
+	var newCandidateForm = new NewCandidateForm();
+	newCandidateForm.render();
+	
+	$("#open-new-candidate").click(function(){
+		$(this).colorbox({width:"50%", inline:true, href:"#newCandidate"});
+		
+		$(this).bind('cbox_cleanup', function() {
+			//TODO: save new candidate and render it in rank
 		});
 	});
 }
