@@ -507,12 +507,20 @@ input[type="number"] {
 	-webkit-rtl-ordering: logical;
 	-webkit-user-select: text;
 	-webkit-box-orient: vertical;
-	resize: auto;
 	cursor: auto;
 	padding: 0;
 	margin: 0;
 	width: 100%;
+}
+
+.single-line-textarea {
+	height: 24px;
+	resize: none;
+}
+
+.three-lines-textarea {
 	height: 70px;
+	resize: none;
 }
 
 .profile-form-field-container {

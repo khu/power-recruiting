@@ -49,7 +49,7 @@ var Profile = $.Class.create({
 						+ '<span>Comments</span>'
 					+ '</div>'
 					+ '<div class="profile-form-field-container">'
-						+ '<textarea id="comments_${id}">${comments}</textarea>'
+						+ '<textarea class="three-lines-textarea" id="comments_${id}">${comments}</textarea>'
 					+ '</div>'
 				+ '</div>'
 			+ '</div>'
