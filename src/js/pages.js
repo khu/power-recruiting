@@ -67,9 +67,10 @@ function import_candidates(data_from, groupsCount){
 		return;
 	}
 
-	getLocalStorage().setItem('groupsCount', groupsCount);
-
 	var candidates = new Candidates(groupsCount)
+	candidates.clear();
+
+	getLocalStorage().setItem('groupsCount', groupsCount);
 	candidates.fromCSV(data_from);
 	candidates.persist();
 	candidates.render();
