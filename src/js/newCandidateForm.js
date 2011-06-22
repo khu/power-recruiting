@@ -58,6 +58,16 @@ var NewCandidateForm = $.Class.create({
 		var newCandidateContainer = $('#newCandidateContainer');
 		newCandidateContainer.children().remove();
 		newCandidateContainer.append($(this.template));
+	},
+	saveNewCandidate: function(info) {
+		var newCandidate = new Candidate(info);
+		
+		this.persistNewCandidate(newCandidate);
+	},
+	persistNewCandidate: function(newCandidate) {
+		var indexes = getLocalStorage().getItem('candidates_index');
+		getLocalStorage().setItem('candidates_index', indexes + ',' + newCandidate.id);
+		
+		newCandidate.persist();
 	}
-	
 });

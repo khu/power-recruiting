@@ -10,8 +10,8 @@ initialize: function(obj) {
 	this.college = obj[3];
 	this.department = obj[4];
 	this.phone = obj[5];
-	this.logic_correct = obj[6]  - 0;
-	this.logic_answered = obj[7]  - 0;
+	this.logic_correct = obj[7]  - 0;
+	this.logic_answered = obj[6]  - 0;
 	this.w_correct = obj[8] - 0;
 	this.w_answered = obj[9]  - 0;
 	this.group = obj[10];
@@ -126,8 +126,8 @@ toString: function() {
 	+ this.college + "\t"
 	+ this.department + "\t"
 	+ this.phone + "\t"
-	+ this.logic_correct + "\t"
 	+ this.logic_answered + "\t"
+	+ this.logic_correct + "\t"
 	+ this.w_correct  + "\t"
 	+ this.w_answered + "\t"
 	+ this.group + "\t"

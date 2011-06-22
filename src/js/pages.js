@@ -75,9 +75,11 @@ function import_candidates(data_from, groupsCount){
 		return;
 	}
 
+	var candidates = new Candidates(groupsCount)
+	candidates.clear();
+
 	getLocalStorage().setItem('groupsCount', groupsCount);
 
-	var candidates = new Candidates(groupsCount)
 	candidates.fromCSV(data_from);
 	candidates.persist();
 	candidates.render();
@@ -138,13 +140,50 @@ function init_new_candidate_container() {
 	var newCandidateForm = new NewCandidateForm();
 	newCandidateForm.render();
 	
-	$("#open-new-candidate").click(function(){
+	$(".list-sub-item").click(function(){
 		$(this).colorbox({width:"50%", inline:true, href:"#newCandidate"});
 		
-		$(this).bind('cbox_cleanup', function() {
+		var closingBoxEventName = 'cbox_cleanup';
+		$(this).unbind(closingBoxEventName);
+		$(this).bind(closingBoxEventName, function() {
 			//TODO: save new candidate and render it in rank
+			var newCandidateInfo = collect_new_candidate_info();
+			newCandidateForm.saveNewCandidate(newCandidateInfo);
+			
+			var candidates = get_candidates_instance();
+			candidates.render();
 		});
 	});
+}
+
+function collect_new_candidate_info() {
+	var ids = getLocalStorage().getItem('candidates_index').split(',');
+	var newCandidateId = ids.length * 50;
+	
+	var info = [];
+	info.push(newCandidateId);
+	info.push($('#newCandidateName').val());
+	info.push($('#newCandidateGender').val());
+	info.push($('#newCandidateCollege').val());
+	info.push('-');	//department
+	info.push('-');	//phone
+	info.push('-');	//answered-logic
+	info.push($('#newCandidateLogic').val());
+	info.push($('#newCandidateWonderlic').val());
+	info.push('-');	//wonderlic-logic
+	info.push('G-1-1'); //hard-coded group
+	info.push('D');	//default grade
+	info.push(wrapCommentsContent($('#newCandidateComments').val()));
+
+	return info;
+}
+
+function wrapCommentsContent(comments){
+	return "#" + comments + "#";
+}
+
+function get_current_group() {
+	return $('sub-tab-button-active sub-tab-button').innerText;
 }
 
 function get_candidates_instance() {
