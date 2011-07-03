@@ -8,8 +8,8 @@ test("should parse the single candidate", function() {
 	equals("F", candidate.gender);
 	equals("西安交通大学", candidate.college);
 	equals("信息工程", candidate.department);
-	equals(12, candidate.logic_correct);
-	equals(11, candidate.logic_answered);
+	equals(11, candidate.logic_correct);
+	equals(12, candidate.logic_answered);
 	equals(26, candidate.w_correct);
 	equals(47, candidate.w_answered);
 	equals("G-1-1", candidate.group);

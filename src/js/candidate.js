@@ -112,8 +112,8 @@ export_as: function() {
 	+ this.college + "\t"
 	+ this.department + "\t"
 	+ this.phone + "\t"
-	+ this.logic_correct + "\t"
 	+ this.logic_answered + "\t"
+	+ this.logic_correct + "\t"
 	+ this.w_correct  + "\t"
 	+ this.w_answered + "\t"
 	+ this.grade;
