@@ -32,7 +32,7 @@ gender_str:function() {
 	return this.is_female() ? "Female" : "Male"
 },
 is_female:function() {
-	return this.gender == 'F' || this.gender == '女';
+	return this.gender.toLowerCase() == 'f' || this.gender.toLowerCase() == 'female' || this.gender == '女';
 },
 display:function() {
 	var	group = this.findExistingGroup()

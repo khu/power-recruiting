@@ -203,9 +203,12 @@ function export_candidates(data_to){
 }
 
 function statistic_draw() {
+	var canvasId = 'diversity-chart-canvas';
+	clear_statistic_canvas($('#'+canvasId)[0])
+	
 	var candidates = get_candidates_instance();
-
-	var diversityPie = new RGraph.Pie('diversity-chart-canvas', [candidates.females_amount(),candidates.males_amount()]);
+	
+	var diversityPie = new RGraph.Pie(canvasId, [candidates.females_amount(),candidates.males_amount()]);
 	var females_label = candidates.females_percentage() + "%";
 	var male_label = candidates.males_percentage() + "%";
 
@@ -228,6 +231,15 @@ function statistic_draw() {
 	diversityPie.Set('chart.strokestyle', 'transparent');
 	diversityPie.Set('chart.colors', ["pink", "#CCF"]);
 	diversityPie.Draw();
+}
+
+function clear_statistic_canvas(canvas) {
+	var context = canvas.getContext('2d');
+	
+	context.clearRect(0, 0, canvas.width, canvas.height);
+	var w = canvas.width;
+	canvas.width = 1;
+	canvas.width = w;
 }
 
 function load_group_count() {
