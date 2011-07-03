@@ -76,8 +76,8 @@ function import_candidates(data_from, groupsCount){
 	}
 
 	var candidates = new Candidates(groupsCount)
-	candidates.clear();
 
+	getLocalStorage().clear();
 	getLocalStorage().setItem('groupsCount', groupsCount);
 
 	candidates.fromCSV(data_from);
@@ -123,7 +123,9 @@ function init_profile_binding() {
 		var candidateId = $(this).attr('id').replace('_last', '');
 		$(this).colorbox({width:"50%", inline:true, href:"#profile-" + candidateId});
 		
-		$(this).bind('cbox_cleanup', function() {
+		var closingBoxEventName = 'cbox_cleanup';
+		$(this).unbind(closingBoxEventName);
+		$(this).bind(closingBoxEventName, function() {
 			var comments = $("#comments_" + candidateId).val();
 			if(comments != undefined){
 				var candidates = get_candidates_instance();
@@ -133,6 +135,7 @@ function init_profile_binding() {
 				candidate.persist();
 			}
 		});
+		$('.list-sub-item').unbind(closingBoxEventName);
 	});
 }
 
@@ -146,12 +149,14 @@ function init_new_candidate_container() {
 		var closingBoxEventName = 'cbox_cleanup';
 		$(this).unbind(closingBoxEventName);
 		$(this).bind(closingBoxEventName, function() {
-			//TODO: save new candidate and render it in rank
+			//save new candidate and render it in rank
 			var newCandidateInfo = collect_new_candidate_info();
 			newCandidateForm.saveNewCandidate(newCandidateInfo);
 			
 			var candidates = get_candidates_instance();
 			candidates.render();
+			
+			init_pages();
 		});
 	});
 }

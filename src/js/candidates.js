@@ -113,7 +113,9 @@ var Candidates = $.Class.create({
 			candidate.render();
 		}
 		
-		new Profiles(this).render();
+		var profiles = new Profiles(this);
+		profiles.clean();
+		profiles.render();
 	},
 	init_groups: function() {
 		var groupNames = ['G-1-1','G-1-2','G-1-3','G-1-4','G-1-5',
@@ -178,9 +180,6 @@ var Candidates = $.Class.create({
 		} else {
 			this.load();
 		}
-	},
-	clear:function() {
-		getLocalStorage().clear();		
 	},
 	export_as:function() {
 		var str = ""
