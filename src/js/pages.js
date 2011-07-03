@@ -153,9 +153,12 @@ function init_new_candidate_container() {
 			var newCandidateInfo = collect_new_candidate_info();
 			newCandidateForm.saveNewCandidate(newCandidateInfo);
 			
+			var currentGroup = get_current_group();
+			
 			var candidates = get_candidates_instance();
 			candidates.render();
-			
+
+			set_current_group(currentGroup);
 			init_pages();
 		});
 	});
@@ -170,13 +173,13 @@ function collect_new_candidate_info() {
 	info.push($('#newCandidateName').val());
 	info.push($('#newCandidateGender').val());
 	info.push($('#newCandidateCollege').val());
-	info.push('-');	//department
-	info.push('-');	//phone
-	info.push('-');	//answered-logic
+	info.push('NaN');	//department
+	info.push('NaN');	//phone
+	info.push('NaN');	//answered-logic
 	info.push($('#newCandidateLogic').val());
 	info.push($('#newCandidateWonderlic').val());
-	info.push('-');	//wonderlic-logic
-	info.push('G-1-1'); //hard-coded group
+	info.push('NaN');	//wonderlic-logic
+	info.push(get_current_group()); //hard-coded group
 	info.push('D');	//default grade
 	info.push(wrapCommentsContent($('#newCandidateComments').val()));
 
@@ -188,7 +191,17 @@ function wrapCommentsContent(comments){
 }
 
 function get_current_group() {
-	return $('sub-tab-button-active sub-tab-button').innerText;
+	return $('#rank .sub-tab-button-active .sub-tab-button')[0].innerText;
+}
+
+function set_current_group(currentGroup) {
+	var groupHeaders = $('#rank .sub-tab-button-container');
+	for(var i=0; i<groupHeaders.size(); i++) {
+		if (groupHeaders[i].children[0].innerText == currentGroup) {
+			switch_to_group($(groupHeaders[i]).find('.sub-tab-button'));
+			return;
+		}
+	}
 }
 
 function get_candidates_instance() {
