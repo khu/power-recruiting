@@ -175,7 +175,9 @@
 				$("#confirm-button").click(function(){
 					import_candidates($("#import-data").val(), $("#groups-count").val());
 				});
-				
+				$('#groups-count').mouseleave(function(){
+					$("#import-data").focus();
+				});
 				$(".form-button").mousedown(function(){
 					$(this).css("border-color","black");
 				});
