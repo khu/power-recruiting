@@ -119,6 +119,16 @@ function init_drop_ability() {
 		}
 	});
 	
+	$("#trash").droppable({
+		accept: ".candidate",
+		activeClass: "ui-state-highlight",
+		drop: function(event, ui) {
+			var candidates = get_candidates_instance();
+			candidates.remove(ui.draggable.attr('id'));
+			candidates.render();
+			init_pages();
+		}
+	});
 }
 
 function init_profile_binding() {
@@ -156,12 +166,8 @@ function init_new_candidate_container() {
 			var newCandidateInfo = collect_new_candidate_info();
 			newCandidateForm.saveNewCandidate(newCandidateInfo);
 			
-			var currentGroup = get_current_group();
-			
 			var candidates = get_candidates_instance();
 			candidates.render();
-
-			set_current_group(currentGroup);
 			init_pages();
 		});
 	});
@@ -194,7 +200,9 @@ function wrapCommentsContent(comments){
 }
 
 function get_current_group() {
-	return $('#rank .sub-tab-button-active .sub-tab-button')[0].innerText;
+	var activeGroup = $('#rank .sub-tab-button-active .sub-tab-button');
+	
+	return activeGroup.length == 0 ? 'G-1-1' : activeGroup[0].innerText;
 }
 
 function set_current_group(currentGroup) {

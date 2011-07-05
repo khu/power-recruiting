@@ -92,6 +92,15 @@ var Candidates = $.Class.create({
 		}
 		return -1;
 	},
+	remove: function(id) {
+		this._candidates.splice(this.index(id), 1);
+		
+		var localStorage = getLocalStorage();
+		localStorage.removeItem('candidates_index');
+		localStorage.removeItem('profile-' + id);
+		
+		this.persist();
+	},
 	contains:function(id) {
 		return this.index(id) != -1;
 	},
@@ -105,8 +114,10 @@ var Candidates = $.Class.create({
 		this.add(candidate)
 	},
 	render:function() {
+		var currentGroup = get_current_group();
 		this.clean_init();
 		this.init_groups();
+		set_current_group(currentGroup);
 		
 		for (var i = 0; i < this.size(); i++) {
 			var candidate = this.get(i);			
@@ -161,9 +172,9 @@ var Candidates = $.Class.create({
 			this.init_perist_data();
 		}
 		var size = this._candidates.length
-			for (var i = 0; i < size; i++) {
-				this._candidates[i].persist();
-			}		
+		for (var i = 0; i < size; i++) {
+			this._candidates[i].persist();
+		}		
 	},
 	init_perist_data:function(){
 		var profile_index_str = ''

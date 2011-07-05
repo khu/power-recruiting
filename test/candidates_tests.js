@@ -87,16 +87,24 @@ module("setup test", {
 	}
 });
 
-test("should save the candidate into storage", function() {
-	var candidate1 = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-	var candidate2 = new Candidate([1, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
+test("should save two candidates into storage and then remove one", function() {
+	var candidate1 = new Candidate([12, "马亚娜1", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
+	var candidate2 = new Candidate([1, "马亚娜2", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
 	var candidates = new Candidates();
 	candidates.add(candidate1);
 	candidates.add(candidate2);
+	
 	candidates.persist();
-	var brandnew = new Candidates();
-	brandnew.load()
-	equals(2, brandnew.size())
+	candidates = new Candidates();
+	candidates.load();
+	equals(2, candidates.size());
+	
+	candidates.remove(1);
+	candidates = new Candidates();
+	candidates.load();
+	equals(1, candidates.size());
+	equals(true, candidates.find(12) != undefined);
+	equals(true, candidates.find(1) == undefined);
 });
 
 
