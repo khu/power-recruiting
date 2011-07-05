@@ -19,6 +19,7 @@ function to_hide(currentNavigator, currentPanel, css) {
 	currentNavigator.parent().removeClass(css);
 	if (currentPanel.attr('id') == "rank") {
 		$(".list-sub-item").hide();
+		$("#trash").hide();
 	}
 	$(currentPanel).hide();
 }
@@ -31,6 +32,7 @@ function to_show(targetNavigator,targetPanel,css, direction) {
 	
 	if (targetPanel.attr('id') == "rank") {
 		$(".list-sub-item").show();
+		$("#trash").show();
 	}
 	
 	$(targetPanel).show('slide', {direction: direction}, 200)
@@ -116,6 +118,7 @@ function init_drop_ability() {
 			candidates.rank(ui.draggable,$(this));
 		}
 	});
+	
 }
 
 function init_profile_binding() {

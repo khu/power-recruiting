@@ -123,13 +123,24 @@ html, body {
 .list-sub-item {
 	position: relative;
 	background-color: #06346A;
-	padding: .4em 2.1em .4em;
+	text-align: center;
 	border-bottom: 1px solid #D1D1D1;
 	border-top: 1px solid #5f5f5f;
 	min-height: 1.7em;
 	display: none;
 	cursor:pointer;
 } 
+.image-container {
+	display: none;
+	border-bottom: 1px solid #A1A1A1;
+	padding-top: 10px;
+	opacity:0.4;
+	text-align: center;
+}
+
+.image-container > img {
+	width: 100px;
+}
 
 .item-selected {
 	background-color: #06346A;
