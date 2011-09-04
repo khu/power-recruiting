@@ -32,7 +32,12 @@ gender_str:function() {
 	return this.is_female() ? "Female" : "Male"
 },
 is_female:function() {
-	return this.gender.toLowerCase() == 'f' || this.gender.toLowerCase() == 'female' || this.gender == '女';
+	var gender = this.gender.toLowerCase();
+	return gender == 'f' || gender == 'female' || gender == '女';
+},
+is_offered:function() {
+	var grade = this.grade.toUpperCase();
+	return grade == '1' || grade == '2-A' || grade == '2-B';
 },
 display:function() {
 	var	group = this.findExistingGroup()

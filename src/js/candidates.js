@@ -274,11 +274,24 @@ var Candidates = $.Class.create({
 	males_amount:function() {
 		return this.size() - this.females_amount();
 	},
-	females_percentage:function() {
-		var females_percentage = (this.females_amount() / this.size()) * 100
-		return Math.round(females_percentage)
+	offered_females_amount:function() {
+		var amount = 0;
+		for (var i = 0; i < this.size(); i++) {
+			var candidate = this.get(i);
+			if (candidate.is_offered() && candidate.is_female()) {
+				amount++
+			}
+		}
+		return amount;
 	},
-	males_percentage:function() {
-		return 100 - this.females_percentage();
+	offered_males_amount:function() {
+		var amount = 0;
+		for (var i = 0; i < this.size(); i++) {
+			var candidate = this.get(i);
+			if (candidate.is_offered() && !candidate.is_female()) {
+				amount++
+			}
+		}
+		return amount;
 	}
 });

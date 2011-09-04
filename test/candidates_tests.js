@@ -59,26 +59,33 @@ test("should escape the header", function() {
 	equals(0, candidates.size())
 });
 
-test("should only keep the int number", function() {
-	var candidate1 = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-	var candidate2 = new Candidate([13, "马亚娜A", "M", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-	var candidate3 = new Candidate([14, "马亚娜B", "M", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-	var candidates = new Candidates();
-	candidates.add(candidate1);
-	candidates.add(candidate2);
-	candidates.add(candidate3);
-	equals(33, candidates.females_percentage())
+function createCandidatesWithGivenGenders() {
+		var candidates = new Candidates();
+		candidates.add(new Candidate([12, "Name1", "F", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", 'A']));
+		candidates.add(new Candidate([13, "Name2", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", 'D']));
+		candidates.add(new Candidate([14, "Name3", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '3']));
+		candidates.add(new Candidate([12, "Name4", "F", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '1']));
+		candidates.add(new Candidate([13, "Name5", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '2-A']));
+		candidates.add(new Candidate([14, "Name6", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '2-C']));
+		return candidates;
+	}
+});
+
+test("should return the amount of all female/male candidates", function() {
+	var candidates = createCandidatesWithGivenGenders();
+	equals(2, candidates.females_amount());
+	equals(4, candidates.males_amount());
+});
+
+test("should return the amount of offered female/male candidates", function() {
+	var candidates = createCandidatesWithGivenGenders();
+	equals(1, candidates.offered_females_amount());
+	equals(1, candidates.offered_males_amount());
 });
 
 test("should only keep the int number", function() {
-	var candidate1 = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-	var candidate2 = new Candidate([13, "马亚娜A", "M", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-	var candidate3 = new Candidate([14, "马亚娜B", "M", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-	var candidates = new Candidates();
-	candidates.add(candidate1);
-	candidates.add(candidate2);
-	candidates.add(candidate3);
-	equals(3, candidates.size())
+	var candidates = createCandidatesWithGivenGenders();
+	equals(6, candidates.size())
 });
 
 module("setup test", {

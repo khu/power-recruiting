@@ -227,43 +227,51 @@ function export_candidates(data_to){
 }
 
 function statistic_draw() {
-	var canvasId = 'diversity-chart-canvas';
-	clear_statistic_canvas($('#'+canvasId)[0])
-	
 	var candidates = get_candidates_instance();
-	
-	var diversityPie = new RGraph.Pie(canvasId, [candidates.females_amount(),candidates.males_amount()]);
-	var females_label = candidates.females_percentage() + "%";
-	var male_label = candidates.males_percentage() + "%";
-
-	diversityPie.Set('chart.labels', ['Female (' + females_label + ')', 'Male (' + male_label + ')']);
-	diversityPie.Set('chart.gutter', 30);
-	diversityPie.Set('chart.shadow', false);
-	diversityPie.Set('chart.tooltips.effect', 'contract');
-	diversityPie.Set('chart.tooltips', [
-		candidates.females_amount() + ' of ' + candidates.size(),
-		candidates.males_amount() + ' of '  + candidates.size(),
-	]);
-	diversityPie.Set('chart.highlight.style', '3d');
-	diversityPie.Set('chart.zoom.hdir', 'center');
-	diversityPie.Set('chart.zoom.vdir', 'up');
-	diversityPie.Set('chart.labels.sticks', true);
-	diversityPie.Set('chart.labels.sticks.color', '#aaa');
-	diversityPie.Set('chart.contextmenu', [['Zoom in', RGraph.Zoom]]);
-	diversityPie.Set('chart.linewidth', 5);
-	diversityPie.Set('chart.labels.sticks', true);
-	diversityPie.Set('chart.strokestyle', 'transparent');
-	diversityPie.Set('chart.colors', ["pink", "#CCF"]);
-	diversityPie.Draw();
-}
-
-function clear_statistic_canvas(canvas) {
-	var context = canvas.getContext('2d');
-	
-	context.clearRect(0, 0, canvas.width, canvas.height);
-	var w = canvas.width;
-	canvas.width = 1;
-	canvas.width = w;
+	var chart = new Highcharts.Chart({
+    chart: {
+       renderTo: 'diversity-chart',
+       margin: [50, 0, 0, 0],
+       plotBackgroundColor: 'none',
+       plotBorderWidth: 0,
+       plotShadow: false            
+    },
+    title: {
+      text: 'Gender diversity statistic for candidates'
+    },
+    subtitle: {
+      text: 'Outer circle: All candidates<br/>Inner circle: Offered candidates',
+    },
+    tooltip: {
+       formatter: function() {
+          return '<b>'+ this.point.name +'</b><br/>'+ 
+             'Percentage: '+ Math.round(this.percentage) +' %<br/>'+
+						 'Count: ' + this.y;
+       }
+    },
+    series: [{
+			type: 'pie',
+			name: 'Offered candidates',
+			size: '45%',
+			innerSize: '20%',
+			data: [
+			   { name: 'Male', y: candidates.offered_males_amount(), color: '#4572A7' },
+			   { name: 'Female', y: candidates.offered_females_amount(), color: '#AA4643' }
+			],
+			dataLabels: {
+			   enabled: false
+			}
+    }, 
+		{
+      type: 'pie',
+      name: 'All candidates',
+      innerSize: '45%',
+      data: [
+       { name: 'Male', y: candidates.males_amount(), color: '#4572A7' },
+       { name: 'Female', y: candidates.females_amount(), color: '#AA4643' }
+      ]
+		}]
+ });
 }
 
 function load_group_count() {

@@ -23,6 +23,23 @@ test("should she is female if the second value is 女", function() {
 	equals(candidate.is_female(), true)
 });
 
+test("should she is offered if the rank in total is not below 2-B", function() {
+	var candidate1 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '1']);
+	var candidate2 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '2-A']);
+	var candidate3 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '2-B']);
+	var candidate4 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '2-C']);
+	var candidate5 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '3']);
+	var candidate6 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'A']);
+	var candidate7 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
+	equals(candidate1.is_offered(), true)
+	equals(candidate2.is_offered(), true)
+	equals(candidate3.is_offered(), true)
+	equals(candidate4.is_offered(), false)
+	equals(candidate5.is_offered(), false)
+	equals(candidate6.is_offered(), false)
+	equals(candidate7.is_offered(), false)
+});
+
 test("should return empty string if the user's grade has not been changed to overall grade", function() {
 	var candidate = new Candidate([52, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
 	equals("", candidate.export_as())
