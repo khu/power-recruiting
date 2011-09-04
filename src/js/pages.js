@@ -229,27 +229,27 @@ function export_candidates(data_to){
 function statistic_draw() {
 	var candidates = get_candidates_instance();
 	var chart = new Highcharts.Chart({
-    chart: {
-       renderTo: 'diversity-chart',
-       margin: [50, 0, 0, 0],
-       plotBackgroundColor: 'none',
-       plotBorderWidth: 0,
-       plotShadow: false            
-    },
-    title: {
-      text: 'Gender diversity statistic for candidates'
-    },
-    subtitle: {
-      text: 'Outer circle: All candidates<br/>Inner circle: Offered candidates',
-    },
-    tooltip: {
-       formatter: function() {
-          return '<b>'+ this.point.name +'</b><br/>'+ 
-             'Percentage: '+ Math.round(this.percentage) +' %<br/>'+
-						 'Count: ' + this.y;
-       }
-    },
-    series: [{
+	  chart: {
+	     renderTo: 'diversity-chart',
+	     margin: [50, 0, 0, 0],
+	     backgroundColor: '#EEEEEE',
+	     plotBorderWidth: 0,
+	     plotShadow: false            
+	  },
+	  title: {
+	    text: 'Gender diversity statistic for candidates', 
+	  },
+	  subtitle: {
+	    text: 'Outer circle: All candidates<br/>Inner circle: Offered candidates',
+	  },
+	  tooltip: {
+	     formatter: function() {
+	        return '<b>'+ this.point.name +'</b><br/>'+ 
+	           'Percentage: '+ Math.round(this.percentage) +' %<br/>'+
+					 'Count: ' + this.y;
+	     }
+	  },
+	  series: [{
 			type: 'pie',
 			name: 'Offered candidates',
 			size: '45%',
@@ -261,17 +261,19 @@ function statistic_draw() {
 			dataLabels: {
 			   enabled: false
 			}
-    }, 
+	  }, 
 		{
-      type: 'pie',
-      name: 'All candidates',
-      innerSize: '45%',
-      data: [
-       { name: 'Male', y: candidates.males_amount(), color: '#4572A7' },
-       { name: 'Female', y: candidates.females_amount(), color: '#AA4643' }
-      ]
+	    type: 'pie',
+	    name: 'All candidates',
+	    innerSize: '45%',
+	    data: [
+	     { name: 'Male', y: candidates.males_amount(), color: '#4572A7' },
+	     { name: 'Female', y: candidates.females_amount(), color: '#AA4643' }
+	    ]
 		}]
- });
+	});
+	
+	$("tspan:contains('Highcharts.com')").remove();
 }
 
 function load_group_count() {
