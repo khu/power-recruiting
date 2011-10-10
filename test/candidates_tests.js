@@ -1,3 +1,8 @@
+module("candidates_test", {
+	setup: function() {
+	}
+});
+
 test("should parse the single candidate", function() {
 	var candidates = new Candidates();
 	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47");
@@ -8,13 +13,12 @@ test("should parse the single candidate", function() {
 	equals("F", candidate.gender);
 	equals("西安交通大学", candidate.college);
 	equals("信息工程", candidate.department);
-	equals(11, candidate.logic_correct);
-	equals(12, candidate.logic_answered);
+	equals(12, candidate.logic_score);
+	equals(11, candidate.logic_answered);
 	equals(26, candidate.w_correct);
 	equals(47, candidate.w_answered);
 	equals("G-1-1", candidate.group);
 	equals('D', candidate.grade);
-	
 	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1-1	D	##", candidates.toCSV());
 });
 
@@ -68,8 +72,7 @@ function createCandidatesWithGivenGenders() {
 		candidates.add(new Candidate([13, "Name5", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '2-A']));
 		candidates.add(new Candidate([14, "Name6", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '2-C']));
 		return candidates;
-	}
-});
+}
 
 test("should return the amount of all female/male candidates", function() {
 	var candidates = createCandidatesWithGivenGenders();
@@ -88,7 +91,7 @@ test("should only keep the int number", function() {
 	equals(6, candidates.size())
 });
 
-module("setup test", {
+module("candidates_test", {
 	setup: function() {
 		getLocalStorage().clear()
 	}
@@ -115,7 +118,7 @@ test("should save two candidates into storage and then remove one", function() {
 });
 
 
-module("setup test", {
+module("candidates_test", {
 	setup: function() {
 		var candidate = new Candidate([12, "马亚娜", "F","西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
 		var groupid = candidate.group;
@@ -150,7 +153,7 @@ test("should first remove everything before render all", function() {
 	equals($(".grade2-A #" + candidate.id).exists(), true)		
 });
 
-module("setup test", {
+module("candidates_test", {
 	setup: function() {
 		var candidate = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
 		var groupid = candidate.group;

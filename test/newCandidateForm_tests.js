@@ -1,4 +1,4 @@
-module("setup test", {
+module("newCandidateForm_test", {
 	setup: function() {
 		var html = '<div id="newCandidateContainer"></div>'
 		$("#qunit-fixture").append($(html));

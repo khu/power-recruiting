@@ -64,7 +64,7 @@ var Profile = $.Class.create({
 		
 		var html = this.template.replace("${name}", this.candidate.name)
 							.replace("${college}", this.candidate.college)
-							.replace("${logic}", this.candidate.logic_correct)
+							.replace("${logic}", this.candidate.logic_score)
 							.replace("${gender}", this.candidate.gender_str())
 							.replace("${wonderlic}", this.candidate.w_correct)
 							.replace("${id}", this.candidate.id)	//replace first ${id} for profile id

@@ -1,4 +1,4 @@
-module("setup test", {
+module("profile_test", {
 	setup: function() {
 		var candidate = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "D", "G-1-1", "#good comments#"]);
 		var groupid = candidate.group;
@@ -11,32 +11,33 @@ module("setup test", {
 		$("#qunit-fixture").empty();
 	}
 });
-
+function assertEntireContentExist(content) {
+	equals($("#profiles span:contains("+content+")").length > 0, true);
+}
 test("should render the name of candidate", function() {
-	equals($("#profiles").html().indexOf("马亚娜") > -1, true)
+	assertEntireContentExist('马亚娜');
 });
 
 test("should render the college of candidate", function() {
-	equals($("#profiles").html().indexOf("西安交通大学") > -1, true)
+	assertEntireContentExist('西安交通大学');
 });
 
 test("should render the logic of candidate", function() {
-	equals($("#profiles").html().indexOf("12") > -1, true)
-	
+	assertEntireContentExist('12');
 });
 
 test("should render the gender of candidate", function() {
-	equals($("#profiles").html().indexOf("Female") > -1, true)
+	assertEntireContentExist("Female");
 });
 
 test("should render the wonderlic of candidate", function() {
-	equals($("#profiles").html().indexOf("26") > -1, true)
-});
-
-test("should render the id of candidate", function() {
-	equals($("#profiles").html().indexOf("profile-12") > -1, true)
+	assertEntireContentExist("26");
 });
 
 test("should render the comments of candidate", function() {
-	equals($("#profiles").html().indexOf("good comments") > -1, true)
+	equals($("#profiles textarea:contains('good comments')").length > 0, true);
+});
+
+test("should render the id of candidate", function() {
+	equals($("#profile-12").length > 0, true)
 });

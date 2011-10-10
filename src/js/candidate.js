@@ -10,8 +10,8 @@ initialize: function(obj) {
 	this.college = obj[3];
 	this.department = obj[4];
 	this.phone = obj[5];
-	this.logic_correct = obj[7]  - 0;
-	this.logic_answered = obj[6]  - 0;
+	this.logic_score = obj[6]  - 0;
+	this.logic_answered = obj[7]  - 0;
 	this.w_correct = obj[8] - 0;
 	this.w_answered = obj[9]  - 0;
 	this.group = obj[10];
@@ -89,7 +89,7 @@ renderItself: function() {
 		groupId = "all-groups";
 	}
 	var css = " ui-widget-content " + (this.is_female() ? "female" : "male");
-	var text = "<div id=" + this.id + " class='candidate ui-draggable " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
+	var text = "<div id=" + this.id + " class='candidate ui-draggable " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_score +" "+ this.w_correct + "</div></div>";
 	var obj = $("#" + groupId + " .grade" + this.grade);
 	obj.append(text)
 },
@@ -97,7 +97,7 @@ renderItsLast: function() {
 	var css = " ui-widget-content " + (this.is_female() ? "female" : "male");
 	if (!this._is_single_group()){
 		css += " undraggable "
-		var text = "<div id=" + this.id + "_last class='candidate " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_correct +" "+ this.w_correct + "</div></div>";
+		var text = "<div id=" + this.id + "_last class='candidate " + css +"'><a href='index.html?id=" + this.id + "'>" + this.name + "</a><div class='score'>" + this.logic_score +" "+ this.w_correct + "</div></div>";
 		var obj = $("#" + this.group + " .grade" + this.last_grade);
 		obj.append(text)
 	}
@@ -117,8 +117,8 @@ export_as: function() {
 	+ this.college + "\t"
 	+ this.department + "\t"
 	+ this.phone + "\t"
+	+ this.logic_score + "\t"
 	+ this.logic_answered + "\t"
-	+ this.logic_correct + "\t"
 	+ this.w_correct  + "\t"
 	+ this.w_answered + "\t"
 	+ this.grade;
@@ -131,8 +131,8 @@ toString: function() {
 	+ this.college + "\t"
 	+ this.department + "\t"
 	+ this.phone + "\t"
+	+ this.logic_score + "\t"
 	+ this.logic_answered + "\t"
-	+ this.logic_correct + "\t"
 	+ this.w_correct  + "\t"
 	+ this.w_answered + "\t"
 	+ this.group + "\t"

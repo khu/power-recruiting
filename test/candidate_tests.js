@@ -1,4 +1,4 @@
-module("setup test", {
+module("candidate_test", {
 	setup: function() {
 	}
 });
@@ -10,8 +10,8 @@ test("should render the single candidate", function() {
 	equals("女", candidate.gender);
 	equals("西安交通大学", candidate.college);
 	equals("信息工程", candidate.department);
-	equals(11, candidate.logic_correct);
-	equals(12, candidate.logic_answered);
+	equals(12, candidate.logic_score);
+	equals(11, candidate.logic_answered);
 	equals(26, candidate.w_correct);
 	equals(47, candidate.w_answered);
 	equals("G-1-2", candidate.group)
@@ -53,7 +53,7 @@ test("should return all candidate data if the user's grade has been changed to o
 
 });
 
-module("setup test", {
+module("candidate_test", {
 	setup: function() {
 		var candidate = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
 		var groupid = candidate.group;
