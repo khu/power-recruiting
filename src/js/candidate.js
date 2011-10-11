@@ -109,9 +109,6 @@ toCSV:function() {
 	return this.toString()
 },
 export_as: function() {
-	if (this._is_single_group()) {
-		return ""
-	}
 	var str = "" + this.name + "\t"
 	+ this.gender+ "\t"
 	+ this.college + "\t"

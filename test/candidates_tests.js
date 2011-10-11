@@ -64,14 +64,14 @@ test("should escape the header", function() {
 });
 
 function createCandidatesWithGivenGenders() {
-		var candidates = new Candidates();
-		candidates.add(new Candidate([12, "Name1", "F", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", 'A']));
-		candidates.add(new Candidate([13, "Name2", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", 'D']));
-		candidates.add(new Candidate([14, "Name3", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '3']));
-		candidates.add(new Candidate([12, "Name4", "F", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '1']));
-		candidates.add(new Candidate([13, "Name5", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '2-A']));
-		candidates.add(new Candidate([14, "Name6", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '2-C']));
-		return candidates;
+	var candidates = new Candidates();
+	candidates.add(new Candidate([21, "Name1", "F", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", 'A']));
+	candidates.add(new Candidate([22, "Name2", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", 'D']));
+	candidates.add(new Candidate([23, "Name3", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '3']));
+	candidates.add(new Candidate([25, "Name4", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '2-A']));
+	candidates.add(new Candidate([24, "Name5", "F", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '1']));
+	candidates.add(new Candidate([26, "Name6", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '2-C']));
+	return candidates;
 }
 
 test("should return the amount of all female/male candidates", function() {
@@ -86,9 +86,16 @@ test("should return the amount of offered female/male candidates", function() {
 	equals(1, candidates.offered_males_amount());
 });
 
-test("should only keep the int number", function() {
+test("should export offered candidates ordered by rank", function() {
 	var candidates = createCandidatesWithGivenGenders();
-	equals(6, candidates.size())
+	var result = candidates.export_as().split('\n');
+	equals(result.length, 6);
+	equals(result[0], "Name5	F	西安交通大学	信息工程	13772******	12	11	26	47	1");
+	equals(result[1], "Name4	M	西安交通大学	信息工程	13772******	12	11	26	47	2-A");
+	equals(result[2], "Name6	M	西安交通大学	信息工程	13772******	12	11	26	47	2-C");
+	equals(result[3], "Name3	M	西安交通大学	信息工程	13772******	12	11	26	47	3");
+	equals(result[4], "Name1	F	西安交通大学	信息工程	13772******	12	11	26	47	A");
+	equals(result[5], "Name2	M	西安交通大学	信息工程	13772******	12	11	26	47	D");
 });
 
 module("candidates_test", {

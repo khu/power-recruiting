@@ -193,19 +193,19 @@ var Candidates = $.Class.create({
 		}
 	},
 	export_as:function() {
-		var str = ""
-		var size = this._candidates.length
-		for(var i = 0; i < size; i++) {
-			var export_as = this._candidates[i].export_as();
-			if (export_as == "") {
-				continue;
-			}
-			str += this._candidates[i].export_as()
-			if (i < size - 1) {
-				str += "\n"
-			}
+		var sortedCandidates = this._candidates.sort(function(candidate1, candidate2){ 
+			if (candidate1.grade === candidate2.grade) return 0;
+			return (candidate1.grade > candidate2.grade) ? 1 : -1;
+		});
+		
+		var exportingText = "";
+		for(var i = 0; i < sortedCandidates.length; i++) {
+			exportingText += sortedCandidates[i].export_as() + '\n';
 		}
-		return str;	
+		if (exportingText.length > 0) {
+			exportingText = exportingText.substring(0, exportingText.length - 1);
+		}
+		return exportingText;
 	},
 	load:function() {
 		var profile_index_str = getLocalStorage().getItem('candidates_index');
