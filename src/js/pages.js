@@ -73,10 +73,6 @@ function index_in_scople(parent, current_elem, select) {
 }
 
 function import_candidates(data_from, groupsCount){
-	if (data_from.trim() == "") {
-		return;
-	}
-
 	var candidates = new Candidates(groupsCount)
 
 	getLocalStorage().clear();
@@ -215,8 +211,8 @@ function init_new_candidate_container() {
 }
 
 function collect_new_candidate_info() {
-	var ids = getLocalStorage().getItem('candidates_index').split(',');
-	var newCandidateId = ids.length * 50;
+	var idsString = getLocalStorage().getItem('candidates_index');
+	var newCandidateId = idsString === null ? 1 : idsString.split(',').length * 50;
 	
 	var info = [];
 	info.push(newCandidateId);
