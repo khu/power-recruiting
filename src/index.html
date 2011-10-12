@@ -59,46 +59,14 @@
 					</div>
 					<div id="import">
 						<div class="form-fieldset">
-							<div class="form-fieldset-title">Candidates Information</div>
+							<div class="form-fieldset-title">
+								<label>Candidates Information</label>
+								<div class="button demo-button">Demo Data</div>
+							</div>
 							<div class="panel-body">
 								<div class="field-textarea">
 									<div class="form-field-container">
 										<textarea  id="import-data" class="input-text">
-魏文彬	男	西安交通大学	计算机科学与技术	13659245448	12	11	37	45
-姜欣	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44
-蒋新建	男	西安交通大学	计算机系统结构	13572945374	12	11	27	46
-罗伟雄	男	西安交通大学	计算机科学与技术	13759920843	12	11	27	45
-张华立	女	西安交通大学	信息工程	13772148940	12	11	26	47
-龙丹妮	男	西北大学	计算机应用	18966738426	12	11	25	37
-许三多	男	西北工业大学	微机电系统集成设计技术	15902978986	12	11	24	43
-甘小宁	男	西电		15102936386	12	11	24	34
-张玉生	男	西电	计算机	13519103505	12	11	23	37
-王志刚	男	西电	计算机	15929772578	12	11	22	41
-仕明	男	西电	计算机系统结构	15991700216	12	11	22	33
-康洪雷	男	西电	计算机	15829765979	12	11	22	30
-徐仕明	男	西交	计算机科学与技术	15991983723	12	11	21	43
-舒崇福	男	上海交通大学	自动化双控	13701817742	12	11	20	32
-王中军	女	西安交通大学	通信与信息系统	13709208644	12	11	20	40
-杨文虎	男	西电		13772457436	12	11	16	17
-赵明仁	女	西电	计算机应用技术	15991773341	12	11	16	26
-王中磊	男	电信学院	计算机科学与技术	15934840819	12	11	16	20
-施方平	女	西安交通大学	计算机科学与技术	13991959204	11	11	19	39
-高爱平	男	西安交通大学	计算机软件与理论	13772041906	11	11	29	46
-张寒冰	男	西北工业大学	计算数学	13772524307	11	11	28	45
-韩志伟	女	西电	计算机应用技术	13484930670	11	11	27	36
-姬建刚	女	西北大学	计算机软件与理论	13659238741	11	11	26	40
-王世顺	男	西安交通大学	计算机科学与技术	13572878871	11	11	25	46
-甄洪民	女	西北工业大学	计算机科学与技术	15109277632	11	11	25	37
-冯志远	女	西安交通大学		13488320497	11	11	25	47
-刘义强	男	西安交通大学	计算机系统结构	13991292748	11	11	23	44
-杨峻峰	男	西安电子科技大学	计算机系统结构	13572099099	11	11	23	32
-邓长叶	男	西电		13772102573	11	11	22	35
-张金华	女	西安交通大学	计算机系统结构	15091525605	11	11	21	28
-祝树良	女	西安电子科技大学	计算机应用	13630211305	11	11	20	34
-张崇林	女	西交	计算机科学与技术	13484919134	11	11	20	43
-邓宝	男	西北工业大学	计算机应用技术	13700238334	11	11	19	28
-许兰	女	西安交通大学	软件工程	13519124356	11	11	18	34
-刘海洋	男	西电	计算机软件	13809154213	11	11	16	33
 										</textarea>	
 									</div>
 								</div>
@@ -108,7 +76,7 @@
 								<input type="number" id="groups-count" min="3" max="12" value="5">
 							</div>
 							<div class="form-button-container">
-								<div class="form-button" id="confirm-button">
+								<div class="button form-button">
 									<span>Reset Data</span>
 								</div>
 							</div>
@@ -116,7 +84,9 @@
 					</div>
 					<div id="export" style="display:none">
 						<div class="form-fieldset">
-							<div class="form-fieldset-title">Candidates Information</div>
+							<div class="form-fieldset-title">
+								<label>Candidates Information</label>
+							</div>
 							<div class="panel-body">
 								<div class="field-textarea">
 									<div class="form-field-container">
@@ -167,16 +137,19 @@
 				$(".list-item").click(function() {
 					navigate_to($(this).find('.list-item-leaf'));
 				});
-				$("#confirm-button").click(function(){
+				$(".form-button").click(function(){
 					import_candidates($("#import-data").val(), $("#groups-count").val());
+				});
+				$(".demo-button").click(function(){
+					load_demo_data($("#import-data"));
 				});
 				$('#groups-count').mouseleave(function(){
 					$("#import-data").focus();
 				});
-				$(".form-button").mousedown(function(){
+				$(".button").mousedown(function(){
 					$(this).css("border-color","black");
 				});
-				$(".form-button").mouseup(function(){
+				$(".button").mouseup(function(){
 					$(this).css("border-color","#A6A6A6");
 				});
 				
