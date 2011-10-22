@@ -122,7 +122,7 @@ function load_demo_data(textarea) {
 许兰	女	西安交通大学	软件工程	13500000001	11	11	18	34\n\
 刘海洋	男	西电	计算机软件	13500000001	11	11	16	33";
 	
-	textarea.text(demo_data);
+	textarea.val(demo_data);
 }
 
 function init_pages() {
