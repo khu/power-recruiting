@@ -98,12 +98,12 @@ test("should export offered candidates ordered by rank", function() {
 	var candidates = createCandidatesWithGivenGenders();
 	var result = candidates.export_as().split('\n');
 	equals(result.length, 6);
-	equals(result[0], "Name5	F	西安交通大学	信息工程	13772******	12	11	26	47	1");
-	equals(result[1], "Name4	M	西安交通大学	信息工程	13772******	12	11	26	47	2-A");
-	equals(result[2], "Name6	M	西安交通大学	信息工程	13772******	12	11	26	47	2-C");
-	equals(result[3], "Name3	M	西安交通大学	信息工程	13772******	12	11	26	47	3");
-	equals(result[4], "Name1	F	西安交通大学	信息工程	13772******	12	11	26	47	A");
-	equals(result[5], "Name2	M	西安交通大学	信息工程	13772******	12	11	26	47	D");
+	equals(result[0], "1	Name5	F	西安交通大学	信息工程	13772******	12	11	26	47");
+	equals(result[1], "2-A	Name4	M	西安交通大学	信息工程	13772******	12	11	26	47");
+	equals(result[2], "2-C	Name6	M	西安交通大学	信息工程	13772******	12	11	26	47");
+	equals(result[3], "3	Name3	M	西安交通大学	信息工程	13772******	12	11	26	47");
+	equals(result[4], "A	Name1	F	西安交通大学	信息工程	13772******	12	11	26	47");
+	equals(result[5], "D	Name2	M	西安交通大学	信息工程	13772******	12	11	26	47");
 });
 
 module("candidates_test", {

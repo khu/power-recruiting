@@ -106,7 +106,8 @@ toCSV:function() {
 	return this.toString()
 },
 export_as: function() {
-	var str = "" + this.name + "\t"
+	var str = "" + this.grade + "\t"
+	+ this.name + "\t"
 	+ this.gender+ "\t"
 	+ this.college + "\t"
 	+ this.department + "\t"
@@ -114,8 +115,7 @@ export_as: function() {
 	+ this.logic_score + "\t"
 	+ this.logic_answered + "\t"
 	+ this.w_correct  + "\t"
-	+ this.w_answered + "\t"
-	+ this.grade;
+	+ this.w_answered;
 	if (this.comments != null && this.comments.length > 0) {
 		str += "\t" + wrapCommentsContent(this.comments);
 	}
