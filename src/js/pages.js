@@ -181,7 +181,7 @@ function init_profile_binding() {
 				var candidates = get_candidates_instance();
 				
 				var candidate = candidates.find(candidateId);
-				candidate.comments = comments;
+				candidate.comments = comments.replace("\t", " ").replace("\n", " ").trim();
 				candidate.persist();
 			}
 		});
@@ -233,7 +233,8 @@ function collect_new_candidate_info() {
 }
 
 function wrapCommentsContent(comments){
-	return "#" + comments + "#";
+	var withoutTabOrEnter = comments.replace("\t", " ").replace("\n", " ");
+	return "#" + withoutTabOrEnter.trim() + "#";
 }
 
 function get_current_group() {

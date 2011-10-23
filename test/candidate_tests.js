@@ -40,12 +40,17 @@ test("should she is offered if the rank in total is not below 2-B", function() {
 	equals(candidate7.is_offered(), false)
 });
 
-test("should return all candidate data if the user's grade has been changed to overall grade", function() {
+test("should export all candidates data no matter which grade", function() {
 	var candidate = new Candidate([52, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
 	equals("马亚娜	女	西安交通大学	信息工程	13772148940	12	11	26	47	D", candidate.export_as())
 	
 	candidate.grade = 1
 	equals("马亚娜	女	西安交通大学	信息工程	13772148940	12	11	26	47	1", candidate.export_as())
+});
+
+test("should export candidate data with comments", function() {
+	var candidate = new Candidate([52, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D', "#She is good at testing.	Ignore tab and trim blank #"]);
+	equals(candidate.export_as(), "马亚娜	女	西安交通大学	信息工程	13772148940	12	11	26	47	D	#She is good at testing. Ignore tab and trim blank#")
 });
 
 module("candidate_test", {

@@ -25,9 +25,6 @@ getCommentsContent: function(comments){
 	}
 	return comments.substring(1, comments.length - 1);
 },
-wrapCommentsContent: function(comments){
-	return "#" + comments + "#";
-},
 gender_str:function() {
 	return this.is_female() ? "Female" : "Male"
 },
@@ -119,6 +116,9 @@ export_as: function() {
 	+ this.w_correct  + "\t"
 	+ this.w_answered + "\t"
 	+ this.grade;
+	if (this.comments != null && this.comments.length > 0) {
+		str += "\t" + wrapCommentsContent(this.comments);
+	}
 	return str;
 },
 toString: function() {
@@ -134,7 +134,7 @@ toString: function() {
 	+ this.w_answered + "\t"
 	+ this.group + "\t"
 	+ this.grade + "\t"
-	str += this.wrapCommentsContent(this.comments);
+	str += wrapCommentsContent(this.comments);
 	if(!this._is_single_group()){
 		str += "\t" + this.last_grade;
 	}
