@@ -28,6 +28,12 @@ var Candidates = $.Class.create({
 		}
 		return str;
 	},
+	isMeaninglessInput: function(candidateInfoItems) {
+		return candidateInfoItems.length < 9 || candidateInfoItems[1].length === 0;
+	},
+	isHeader: function(candidateInfoItems) {
+		return candidateInfoItems.indexOf("姓名") > -1;
+	},
 	fromCSV:function(string) {
 		if(string == null || string.trim() == ""){
 			return;
@@ -36,21 +42,26 @@ var Candidates = $.Class.create({
 		if(!objs) return
 		var size = objs.length;
 		for (var i = 0; i < size; i++) {
-			if (objs[i].indexOf("姓名") > -1){
+			var candidateInfoItems = objs[i];
+			if (this.isMeaninglessInput(candidateInfoItems) || this.isHeader(candidateInfoItems)){
 				continue;
 			}
 
-			this.init_for_the_first_time(objs[i], i)
-			this._candidates.push(new Candidate(objs[i]))
+			this.init_for_the_first_time(candidateInfoItems, i)
+			this._candidates.push(new Candidate(candidateInfoItems))
 		}
 	},
 	init_for_the_first_time:function(fieldsOfCandidate, i) {
-		if (fieldsOfCandidate.length == 9) {
+		if (fieldsOfCandidate.length === 9) {
 			this.init_id(fieldsOfCandidate, i);
 			this.init_group(fieldsOfCandidate);
 			this.init_grade(fieldsOfCandidate);
 			this.init_comments(fieldsOfCandidate);
-		};
+		} else if (fieldsOfCandidate.length === 10) {
+			this.init_id(fieldsOfCandidate, i);
+			this.init_grade(fieldsOfCandidate);
+			this.init_comments(fieldsOfCandidate);
+		}
 	},
 	init_id:function(fieldsOfCandidate, i) {
 		fieldsOfCandidate.unshift(i + 1);	
@@ -129,16 +140,15 @@ var Candidates = $.Class.create({
 		profiles.render();
 	},
 	init_groups: function() {
-		var groupNames = ['G-1-1','G-1-2','G-1-3','G-1-4','G-1-5',
-						  'G-2-1','G-2-2','G-2-3','G-2-4','G-2-5',
-						  'G-3-1','G-3-2'];
-
 		var parent = $("#rank .sub-tab-header");
 		var gradeElements = '<div class="grade gradeA"><div class="grade-bg-text">1</div></div>'
 			+ '<div class="grade gradeB"><div class="grade-bg-text">2</div></div>'
 			+ '<div class="grade gradeC"><div class="grade-bg-text">3</div></div>'
 			+ '<div class="grade gradeD"><div class="grade-bg-text">Pass</div></div>';
-			
+
+		var groupNames = ['G-1-1','G-1-2','G-1-3','G-1-4','G-1-5',
+							'G-2-1','G-2-2','G-2-3','G-2-4','G-2-5',
+							'G-3-1','G-3-2'];
 		var groupsCount = getLocalStorage().getItem('groupsCount');
 		for (var i = 0; i < groupsCount; i++) {
 			var selected = '';

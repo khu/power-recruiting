@@ -22,6 +22,14 @@ test("should parse the single candidate", function() {
 	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1-1	D	##", candidates.toCSV());
 });
 
+test("should parse the single candidate with given group", function() {
+	var candidates = new Candidates();
+	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1");
+	candidate = candidates.find(1)
+	equals("G-1", candidate.group);
+	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1	D	##", candidates.toCSV());
+});
+
 test("should parse multiple candidates", function() {
 	var candidates = new Candidates();
 	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47\n"
@@ -59,7 +67,7 @@ test("should parse multiple candidates with the correct group", function() {
 
 test("should escape the header", function() {
 	var candidates = new Candidates();
-	candidates.fromCSV("姓名	性别	学校	专业	电话	L正确	L答题	W正确	W答题");
+	candidates.fromCSV("姓名	性别	学校	专业	电话	L正确	L答题	W正确	W答题	[组别]");
 	equals(0, candidates.size())
 });
 
