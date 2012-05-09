@@ -1,3 +1,4 @@
+
 function getLocalStorage() {
   return window['localStorage'];
 }
@@ -51,20 +52,24 @@ var Candidates = $.Class.create({
 			this._candidates.push(new Candidate(candidateInfoItems))
 		}
 	},
+
 	init_for_the_first_time:function(fieldsOfCandidate, i) {
-		if (fieldsOfCandidate.length === 9) {
-			this.init_id(fieldsOfCandidate, i);
+		this.init_id(fieldsOfCandidate, i);
+		this.init_comments(fieldsOfCandidate);
+		if(fieldsOfCandidate.length === 12) {
 			this.init_group(fieldsOfCandidate);
-			this.init_grade(fieldsOfCandidate);
-			this.init_comments(fieldsOfCandidate);
-		} else if (fieldsOfCandidate.length === 10) {
-			this.init_id(fieldsOfCandidate, i);
-			this.init_grade(fieldsOfCandidate);
-			this.init_comments(fieldsOfCandidate);
+		} else if(fieldsOfCandidate.length === 13) {
+			this.init_group_fill(fieldsOfCandidate);
 		}
+		this.init_grade(fieldsOfCandidate);
+
 	},
+
 	init_id:function(fieldsOfCandidate, i) {
 		fieldsOfCandidate.unshift(i + 1);	
+	},
+	init_group_fill:function(fieldsOfCandidate) {
+		fieldsOfCandidate[10] = fieldsOfCandidate[11];
 	},
 	init_group:function(fieldsOfCandidate) {
 		var candidateIndex = fieldsOfCandidate[0] - 1;
@@ -74,7 +79,6 @@ var Candidates = $.Class.create({
 		var groupsPerDay = this._groupsCount < 5 ? this._groupsCount : 5;
 		var group = groupIndex % groupsPerDay + 1;
 		var day = Math.floor(groupIndex / groupsPerDay) + 1;
-		
 		fieldsOfCandidate[10] = "G-" + day + "-" + group;
 	},
 	init_grade:function(fieldsOfCandidate) {
@@ -82,7 +86,7 @@ var Candidates = $.Class.create({
 		fieldsOfCandidate[13] = ''
 	},
 	init_comments:function(fieldsOfCandidate) {
-		fieldsOfCandidate[12] = '##'
+		fieldsOfCandidate[12] = '#'+fieldsOfCandidate[10]+'#'
 	},
 	find:function(id) {
 		var size = this._candidates.length
