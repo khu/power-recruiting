@@ -55,10 +55,11 @@ var Candidates = $.Class.create({
 
 	init_for_the_first_time:function(fieldsOfCandidate, i) {
 		this.init_id(fieldsOfCandidate, i);
-		this.init_comments(fieldsOfCandidate);
-		if(fieldsOfCandidate.length === 12) {
+		if(fieldsOfCandidate.length === 11) {
+			this.init_comments(fieldsOfCandidate);
 			this.init_group(fieldsOfCandidate);
-		} else if(fieldsOfCandidate.length === 13) {
+		} else if(fieldsOfCandidate.length === 12) {
+			this.init_comments(fieldsOfCandidate);
 			this.init_group_fill(fieldsOfCandidate);
 		}
 		this.init_grade(fieldsOfCandidate);
@@ -73,9 +74,7 @@ var Candidates = $.Class.create({
 	},
 	init_group:function(fieldsOfCandidate) {
 		var candidateIndex = fieldsOfCandidate[0] - 1;
-		
 		var groupIndex = candidateIndex % this._groupsCount;
-
 		var groupsPerDay = this._groupsCount < 5 ? this._groupsCount : 5;
 		var group = groupIndex % groupsPerDay + 1;
 		var day = Math.floor(groupIndex / groupsPerDay) + 1;

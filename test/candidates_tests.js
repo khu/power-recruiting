@@ -5,7 +5,7 @@ module("candidates_test", {
 
 test("should parse the single candidate", function() {
 	var candidates = new Candidates();
-	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47");
+	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	no comment");
 	equals(1, candidates.size())
 	candidate = candidates.find(1)
 	equals(1, candidate.id);
@@ -19,21 +19,21 @@ test("should parse the single candidate", function() {
 	equals(47, candidate.w_answered);
 	equals("G-1-1", candidate.group);
 	equals('D', candidate.grade);
-	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1-1	D	##", candidates.toCSV());
+	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1-1	D	#no comment#", candidates.toCSV());
 });
 
 test("should parse the single candidate with given group", function() {
 	var candidates = new Candidates();
-	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1");
+	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	no comment	G-1");
 	candidate = candidates.find(1)
 	equals("G-1", candidate.group);
-	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1	D	##", candidates.toCSV());
+	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1	D	#no comment#", candidates.toCSV());
 });
 
 test("should parse multiple candidates", function() {
 	var candidates = new Candidates();
-	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47\n"
-	+ "沈瞳	M	西安交通大学	计算机科学与技术	13659245448	12	11	37	45");
+	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	no comment\n"
+	+ "沈瞳	M	西安交通大学	计算机科学与技术	13659245448	12	11	37	45	no comment");
 	equals(2, candidates.size())
 	candidate = candidates.find(2)
 	equals(2, candidate.id);
@@ -43,21 +43,18 @@ test("should parse multiple candidates", function() {
 
 test("should parse multiple candidates with the correct group", function() {
 	var groupCountMoreThanFive = 10;
-	
 	var candidates = new Candidates(groupCountMoreThanFive);
-	candidates.fromCSV("沈瞳	男	西安交通大学	计算机科学与技术	13659245448	12	11	37	45\n"
-	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44\n"
-	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44\n"
-	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44\n"
-	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44\n"
-	+ "王奇凡	男	西安交通大学	计算机系统结构	13572945374	12	11	27	46\n");
+	candidates.fromCSV("沈瞳	男	西安交通大学	计算机科学与技术	13659245448	12	11	37	45	no comment\n"
+	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44	no comment\n"
+	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44	no comment\n"
+	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44	no comment\n"
+	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44	no comment\n"
+	+ "王奇凡	男	西安交通大学	计算机系统结构	13572945374	12	11	27	46	no comment\n");
 	equals(6, candidates.size())
-	
 	candidate = candidates.find(1)
 	equals(1, candidate.id);
 	equals("沈瞳", candidate.name);
 	equals("G-1-1", candidate.group);
-	
 	equals("G-1-2", candidates.find(2).group);
 	equals("G-1-3", candidates.find(3).group);
 	equals("G-1-4", candidates.find(4).group);
