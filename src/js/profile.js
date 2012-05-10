@@ -61,7 +61,7 @@ var Profile = $.Class.create({
 		if(parentId == "profiles") {
 			return;
 		}
-		
+		var comment = this.candidate.comments.replace(/<br\/>/g,'\n')
 		var html = this.template.replace("${name}", this.candidate.name)
 							.replace("${college}", this.candidate.college)
 							.replace("${logic}", this.candidate.logic_score)
@@ -69,7 +69,7 @@ var Profile = $.Class.create({
 							.replace("${wonderlic}", this.candidate.w_correct)
 							.replace("${id}", this.candidate.id)	//replace first ${id} for profile id
 							.replace("${id}", this.candidate.id)	//replace second ${id} for comments id
-							.replace("${comments}", this.candidate.comments);
+							.replace("${comments}", comment);
 		$("#profiles").append($(html))
 	}
 });
