@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>PowerRecruiting</title>
+		<link type="text/css" href="css/start/jquery-ui-1.8.6.custom.css" rel="stylesheet" />	
+		<link type="text/css" href="css/main.css" rel="stylesheet"/>
+		<link rel="stylesheet" type="text/css" href="css/colorbox/colorbox.css" media="screen" />
+		
+		<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery.class.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
+		<script type="text/javascript" src="js/csv.js"></script>
+		<script type="text/javascript" src="js/candidate.js"></script>
+		<script type="text/javascript" src="js/candidates.js"></script>
+		<script type="text/javascript" src="js/profile.js"></script>
+		<script type="text/javascript" src="js/profiles.js"></script>
+		<script type="text/javascript" src="js/newCandidateForm.js"></script>
+		<script type="text/javascript" src="js/pages.js"></script>
+		<script type="text/javascript" src="js/jquery.colorbox.js"></script>
+		<script type="text/javascript" src="js/highcharts.js"></script>
+	</head>
+	<body>
+		<div class="left-panel">
+			<div class="left-header"></div>
+			<div id="navigators" >
+				<div class="list-containers">
+					<div class="list-item item-selected">
+						<span id="open-import-export" class="list-item-leaf">Import / Export</span>
+					</div>
+					<div class="list-item">
+						<span id="open-rank" class="list-item-leaf">Rank</span>
+					</div>
+					<div class="list-sub-item">
+						<span class="list-sub-item-leaf">+ New Candidate</span>
+					</div>
+					<div id="trash" class="image-container">
+						<img src="images/trash.png" alt="trash">
+					</div>
+					<div class="list-item" id="open-statisic-container">
+						<span id="open-satistic" class="list-item-leaf" >Satistic</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="right-panel">
+			<div class="right-header">
+				<div class="title" id="title">Import / Export</div>
+			</div>
+			<div style="background-image:url('css/images/bg.png');background-repeat: repeat-x;">
+				<div id="import-export">
+					<div class="sub-tab-header">
+						<div class="sub-tab-button-container sub-tab-button-active">
+							<span class="sub-tab-button" id="open-import">Import</span>
+						</div>
+						<div class="sub-tab-button-container" id="open-export-button">
+							<span class="sub-tab-button" id="open-export">Export</span>
+						</div>
+					</div>
+					<div id="import">
+						<div class="form-fieldset">
+							<div class="form-fieldset-title">
+								<label>Candidates Information</label>
+								<div class="button demo-button">Demo Data</div>
+							</div>
+							<div class="panel-body">
+								<div class="field-textarea">
+									<div class="form-field-container">
+										<textarea  id="import-data" class="input-text"></textarea>	
+									</div>
+								</div>
+							</div>
+							<div class="form-fieldset-instructions">
+								<span>Please select the groups count:</span>
+								<input type="number" id="groups-count" min="3" max="12" value="10">
+							</div>
+							<div class="form-button-container">
+								<div class="button form-button">
+									<span>Reset Data</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="export" style="display:none">
+						<div class="form-fieldset">
+							<div class="form-fieldset-title">
+								<label>Candidates Information</label>
+							</div>
+							<div class="panel-body">
+								<div class="field-textarea">
+									<div class="form-field-container">
+										<textarea id="export-data" class="input-text"></textarea>	
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="rank" style="display:none;">			
+					<div class="sub-tab-header">
+						<span id="label-group">Groups</span>
+					</div>
+					<div id="groups">
+						<div id="single-group">
+						</div>
+						<div class="right-header">
+							<div class="title">Overall Rank</div>
+						</div>
+						<div id="all-groups">
+							<div class="grade grade1" ><div class="grade-bg-text">1</div></div>
+							<div class="grade grade2-A"><div class="grade-bg-text">2-A</div></div>
+							<div class="grade grade2-B"><div class="grade-bg-text">2-B</div></div>
+							<div class="grade grade2-C"><div class="grade-bg-text">2-C</div></div>
+							<div class="grade grade3"><div class="grade-bg-text">3</div></div>
+						</div>
+					</div>
+				</div>
+				<div id="satistic" style="display:none">
+					<div class="sub-tab-header">
+						<div class="sub-tab-button-container sub-tab-button-active">
+							<span class="sub-tab-button" id="open-diversity-chart">Satistic</span>
+						</div>
+					</div>
+					<div id="diversity-chart">[No highchart support]</div>
+				</div>
+			</div>
+
+			<div id="profiles"></div>
+			<div id="newCandidateContainer"></div>
+		</div>
+
+		
+		
+		<script>
+			$(function(){
+				$(".list-item").click(function() {
+					navigate_to($(this).find('.list-item-leaf'));
+				});
+				$(".form-button").click(function(){
+					import_candidates($("#import-data").val(), $("#groups-count").val());
+				});
+				$(".demo-button").click(function(){
+					load_demo_data($("#import-data"));
+				});
+				$('#groups-count').mouseleave(function(){
+					$("#import-data").focus();
+				});
+				$(".button").mousedown(function(){
+					$(this).css("border-color","black");
+				});
+				$(".button").mouseup(function(){
+					$(this).css("border-color","#A6A6A6");
+				});
+				
+				$("#open-export-button").click(function(){
+					export_candidates($("#export-data"));
+				});
+				$("#open-statisic-container").click(function(){
+					statistic_draw();
+				});
+				
+				load_group_count();
+
+				var candidates = new Candidates($("#groups-count").val());
+				candidates.try_persist_and_load($("#import-data").val())
+				candidates.render();
+				init_pages();	
+			})
+		</script>
+	</body>
+</html>
+
+
