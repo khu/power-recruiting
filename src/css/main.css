@@ -56,13 +56,10 @@ html, body {
 	background-image: linear-gradient(top,#466890 0,#24364C 2%,#080C11 100%);
 	border-color: #0C1118;
 }
-<<<<<<< HEAD
-=======
 #rank .sub-tab-header {
 		display: inline-table;
 		width: 101%;
 }
->>>>>>> 58105000bc571600ede4ae2eacf68136643e96d5
 .sub-tab-button {
 	font-size: .8em;
 	line-height: 1.2em;
