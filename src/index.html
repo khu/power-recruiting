@@ -56,6 +56,9 @@
 						<div class="sub-tab-button-container" id="open-export-button">
 							<span class="sub-tab-button" id="open-export">Export</span>
 						</div>
+						<div class="sub-tab-button-container" id="open-export-button">
+							<span class="sub-tab-button" id="open-re-group">ReGroup</span>
+						</div>
 					</div>
 					<div id="import">
 						<div class="form-fieldset">
@@ -75,7 +78,7 @@
 								<input type="number" id="groups-count" min="3" max="20" value="10">
 							</div>
 							<div class="form-button-container">
-								<div class="button form-button">
+								<div class="button form-button import-button">
 									<span>Reset Data</span>
 								</div>
 							</div>
@@ -92,6 +95,25 @@
 										<textarea id="export-data" class="input-text"></textarea>	
 									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+					<div id="re-group" style="display:none">
+						<div class="form-fieldset">
+							<div class="form-fieldset-title">
+								<label>Import Candidates Group Information</label>
+							</div>
+							<div class="panel-body">
+								<div class="field-textarea">
+									<div class="form-field-container">
+										<textarea id="re-group-data" class="input-text"></textarea>	
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-button-container">
+							<div class="button form-button regroup-button">
+								<span>Re Group</span>
 							</div>
 						</div>
 					</div>
@@ -136,8 +158,11 @@
 				$(".list-item").click(function() {
 					navigate_to($(this).find('.list-item-leaf'));
 				});
-				$(".form-button").click(function(){
+				$(".import-button").click(function(){
 					import_candidates($("#import-data").val(), $("#groups-count").val());
+				});
+				$(".regroup-button").click(function(){
+					regroup_candidates($("#re-group-data").val());
 				});
 				$(".demo-button").click(function(){
 					load_demo_data($("#import-data"));

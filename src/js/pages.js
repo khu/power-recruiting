@@ -84,6 +84,23 @@ function import_candidates(data_from, groupsCount){
 	init_pages();
 }
 
+function regroup_candidates(data) {
+	var candidates = new Candidates(getLocalStorage().getItem('groupsCount'))
+	candidates.load()
+	objs = csv2array(data.trim(), "\t");
+	if(!objs) return
+	$.each(objs, function(i, obj){
+		var candidateInfoItems = obj;
+		var candidate = candidates.find_by_name(candidateInfoItems[0])
+		if(candidate) {
+			candidate.group = candidateInfoItems[1]
+			candidate.persist()
+		}
+	});
+	candidates.render();
+	init_pages();
+}
+
 function load_demo_data(textarea) {
 	var demo_data = "\
 魏文彬	男	西安交通大学	计算机科学与技术	13500000001	12	11	37	45\n\

@@ -118,6 +118,11 @@ var Candidates = $.Class.create({
 	get:function(index) {
 		return this._candidates[index];
 	},
+	find_by_name: function(name) {
+		return $.grep(this._candidates, function(candidate, i){
+			return candidate.name == name;
+		})[0];
+	},
 	update:function(candidate) {
 		var index = this.index(candidate.id)
 		if (index == -1) return;
