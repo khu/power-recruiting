@@ -75,10 +75,7 @@ var Candidates = $.Class.create({
 	init_group:function(fieldsOfCandidate) {
 		var candidateIndex = fieldsOfCandidate[0] - 1;
 		var groupIndex = candidateIndex % this._groupsCount;
-		var groupsPerDay = this._groupsCount < 5 ? this._groupsCount : 5;
-		var group = groupIndex % groupsPerDay + 1;
-		var day = Math.floor(groupIndex / groupsPerDay) + 1;
-		fieldsOfCandidate[10] = "G-" + day + "-" + group;
+		fieldsOfCandidate[10] = this.get_group_name_by_index(groupIndex);
 	},
 	init_grade:function(fieldsOfCandidate) {
 		fieldsOfCandidate[11] = 'D'
@@ -142,6 +139,11 @@ var Candidates = $.Class.create({
 		profiles.clean();
 		profiles.render();
 	},
+	get_group_name_by_index: function(index) {
+		day = Math.floor(index/5) + 1
+		group_per_day = index%5 + 1
+		return 'G-' + day + '-' + group_per_day
+	},
 	init_groups: function() {
 		var parent = $("#rank .sub-tab-header");
 		var gradeElements = '<div class="grade gradeA"><div class="grade-bg-text">1</div></div>'
@@ -149,9 +151,6 @@ var Candidates = $.Class.create({
 			+ '<div class="grade gradeC"><div class="grade-bg-text">3</div></div>'
 			+ '<div class="grade gradeD"><div class="grade-bg-text">Pass</div></div>';
 
-		var groupNames = ['G-1-1','G-1-2','G-1-3','G-1-4','G-1-5',
-							'G-2-1','G-2-2','G-2-3','G-2-4','G-2-5',
-							'G-3-1','G-3-2'];
 		var groupsCount = getLocalStorage().getItem('groupsCount');
 		for (var i = 0; i < groupsCount; i++) {
 			var selected = '';
@@ -161,7 +160,7 @@ var Candidates = $.Class.create({
 				display = "";
 			}
 			
-			var panel_id = groupNames[i];
+			var panel_id = this.get_group_name_by_index(i);
 			var open_panel_id = 'open-' +  panel_id;
 		
 			var groupsHeader = '<div class="sub-tab-button-container ' + selected + '">'

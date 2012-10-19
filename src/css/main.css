@@ -24,13 +24,13 @@ html, body {
 .left-panel {
 	border-right:1px solid black;
 	border-bottom:1px solid black;
-	width: 20%;
+	width: 15%;
 	float:left;
 	height: 725px;
 }
 .right-panel {
 	border-bottom:1px solid black;
-	width:80%;
+	width:85%;
 	float:left;
 	height: 725px;
 }
@@ -55,6 +55,10 @@ html, body {
 	background-image: -webkit-gradient(linear,0% 0,0% 100%,color-stop(0%,#466890),color-stop(2%,#24364C),color-stop(100%,#080C11));
 	background-image: linear-gradient(top,#466890 0,#24364C 2%,#080C11 100%);
 	border-color: #0C1118;
+}
+#rank .sub-tab-header {
+		display: inline-table;
+		width: 101%;
 }
 .sub-tab-button {
 	font-size: .8em;
