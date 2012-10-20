@@ -22,17 +22,15 @@ html, body {
 }
 
 .left-panel {
-	border-right:1px solid black;
-	border-bottom:1px solid black;
 	width: 15%;
 	float:left;
-	height: 725px;
+	height: 100%;
 }
 .right-panel {
-	border-bottom:1px solid black;
+  border-left:1px solid black;
 	width:85%;
 	float:left;
-	height: 725px;
+	height: 100%;
 }
 .right-header {
 	height: 46px;
@@ -573,4 +571,21 @@ input[type="number"] {
 	padding: .8em;
 	color: white;
 	font-size: .9em;
+}
+
+.grade {
+	display: inline-table;
+	width: 100%;
+}
+
+.container {
+	border: 1px solid black;
+  position: relative;
+  float: left;
+  height: 100%;
+  width: 100%;
+}
+
+.form-button-container, .form-fieldset {
+	padding-bottom: 20px;
 }
