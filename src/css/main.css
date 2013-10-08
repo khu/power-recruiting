@@ -361,6 +361,7 @@ input[type="number"] {
 	padding-left:20em;
 	padding-right:20em;
 	cursor: pointer;
+  margin-top: 1em;
 }
 
 .candidate {

@@ -5,7 +5,7 @@ module("candidates_test", {
 
 test("should parse the single candidate", function() {
 	var candidates = new Candidates();
-	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	no comment");
+        candidates.fromCSV("马亚娜	13772148940	F	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-A组	A		no comment	Campus Activity");
 	equals(1, candidates.size())
 	candidate = candidates.find(1)
 	equals(1, candidate.id);
@@ -13,27 +13,25 @@ test("should parse the single candidate", function() {
 	equals("F", candidate.gender);
 	equals("西安交通大学", candidate.college);
 	equals("信息工程", candidate.department);
-	equals(12, candidate.logic_score);
-	equals(11, candidate.logic_answered);
-	equals(26, candidate.w_correct);
-	equals(47, candidate.w_answered);
+	equals(8, candidate.logic_score);
+	equals(0, candidate.w_correct);
 	equals("G-1-1", candidate.group);
-	equals('D', candidate.grade);
-	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1-1	D	#no comment#", candidates.toCSV());
+	equals('A', candidate.grade);
+	equals(candidates.toCSV() , "1	马亚娜	13772148940	F		西安交通大学		信息工程		8	0			G-1-1	A		#no comment#	");
 });
 
 test("should parse the single candidate with given group", function() {
 	var candidates = new Candidates();
-	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	no comment	G-1");
+	candidates.fromCSV("马亚娜	13772148940	F	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-A组	A		no comment	Campus Activity");
 	candidate = candidates.find(1)
-	equals("G-1", candidate.group);
-	equals("1	马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	G-1	D	#no comment#", candidates.toCSV());
+	equals(candidate.group, "G-1-1");
+	equals(candidates.toCSV(), "1	马亚娜	13772148940	F		西安交通大学		信息工程		8	0			G-1-1	A		#no comment#	");
 });
 
 test("should parse multiple candidates", function() {
 	var candidates = new Candidates();
-	candidates.fromCSV("马亚娜	F	西安交通大学	信息工程	13772148940	12	11	26	47	no comment\n"
-	+ "沈瞳	M	西安交通大学	计算机科学与技术	13659245448	12	11	37	45	no comment");
+	candidates.fromCSV("马亚娜	13772148940	F	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-A组	A		no comment	Campus Activity\n"
+	+ "沈瞳	 13772148940	M	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-A组	A		no comment	Campus Activity");
 	equals(2, candidates.size())
 	candidate = candidates.find(2)
 	equals(2, candidate.id);
@@ -44,16 +42,16 @@ test("should parse multiple candidates", function() {
 test("should parse multiple candidates with the correct group", function() {
 	var groupCountMoreThanFive = 10;
 	var candidates = new Candidates(groupCountMoreThanFive);
-	candidates.fromCSV("沈瞳	男	西安交通大学	计算机科学与技术	13659245448	12	11	37	45	no comment\n"
-	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44	no comment\n"
-	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44	no comment\n"
-	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44	no comment\n"
-	+ "张中夏	男	西北工业大学	计算机科学与技术	13636818146	12	11	29	44	no comment\n"
-	+ "王奇凡	男	西安交通大学	计算机系统结构	13572945374	12	11	27	46	no comment\n");
+	candidates.fromCSV("马亚娜	13772148940	F	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-A组	A		no comment	Campus Activity\n"
+	+ "亚娜	13772148940	F	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-B组	A		no comment	Campus Activity\n"
+	+ "马娜	13772148940	F	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-C组	A		no comment	Campus Activity\n"
+	+ "亚马	13772148940	F	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-D组	A		no comment	Campus Activity\n"
+	+ "娜马亚  	13772148940	F	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-E组	A		no comment	Campus Activity\n"
+	+ "马娜亚	 13772148940	F	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-F组	A		no comment	Campus Activity\n");
 	equals(6, candidates.size())
 	candidate = candidates.find(1)
 	equals(1, candidate.id);
-	equals("沈瞳", candidate.name);
+	equals("马亚娜", candidate.name);
 	equals("G-1-1", candidate.group);
 	equals("G-1-2", candidates.find(2).group);
 	equals("G-1-3", candidates.find(3).group);
@@ -70,12 +68,12 @@ test("should escape the header", function() {
 
 function createCandidatesWithGivenGenders() {
 	var candidates = new Candidates();
-	candidates.add(new Candidate([21, "Name1", "F", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", 'A']));
-	candidates.add(new Candidate([22, "Name2", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", 'D']));
-	candidates.add(new Candidate([23, "Name3", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '3']));
-	candidates.add(new Candidate([25, "Name4", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '2-A']));
-	candidates.add(new Candidate([24, "Name5", "F", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '1']));
-	candidates.add(new Candidate([26, "Name6", "M", "西安交通大学", "信息工程", "13772******", 12, 11, 26, 47, "G-1-1", '2-C']));
+	candidates.add(new Candidate([12, "马亚娜", "13772148940", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "A", "", "", ""]));
+	candidates.add(new Candidate([13, "马亚娜", "13772148940", "F", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "1", "", "", ""]));
+	candidates.add(new Candidate([14, "马亚娜", "13772148940", "M", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "2-A", "", "", ""]));
+	candidates.add(new Candidate([15, "马亚娜", "13772148940", "男", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "3", "", "", ""]));
+	candidates.add(new Candidate([16, "马亚娜", "13772148940", "无", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "2-B", "", "", ""]));
+	candidates.add(new Candidate([17, "马亚娜", "13772148940", "男人", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "D", "", "", ""]));
 	return candidates;
 }
 
@@ -87,20 +85,20 @@ test("should return the amount of all female/male candidates", function() {
 
 test("should return the amount of offered female/male candidates", function() {
 	var candidates = createCandidatesWithGivenGenders();
-	equals(1, candidates.offered_females_amount());
-	equals(1, candidates.offered_males_amount());
+	equals(candidates.offered_females_amount(), 1);
+	equals(candidates.offered_males_amount(), 2);
 });
 
 test("should export offered candidates ordered by rank", function() {
 	var candidates = createCandidatesWithGivenGenders();
 	var result = candidates.export_as().split('\n');
 	equals(result.length, 6);
-	equals(result[0], "1	Name5	F	西安交通大学	信息工程	13772******	12	11	26	47");
-	equals(result[1], "2-A	Name4	M	西安交通大学	信息工程	13772******	12	11	26	47");
-	equals(result[2], "2-C	Name6	M	西安交通大学	信息工程	13772******	12	11	26	47");
-	equals(result[3], "3	Name3	M	西安交通大学	信息工程	13772******	12	11	26	47");
-	equals(result[4], "A	Name1	F	西安交通大学	信息工程	13772******	12	11	26	47");
-	equals(result[5], "D	Name2	M	西安交通大学	信息工程	13772******	12	11	26	47");
+	equals(result[0], "1	马亚娜	F	西安交通大学	信息工程	13772148940	1	2	");
+	equals(result[1], "2-A	马亚娜	M	西安交通大学	信息工程	13772148940	1	2	");
+	equals(result[2], "2-B	马亚娜	无	西安交通大学	信息工程	13772148940	1	2	");
+	equals(result[3], "3	马亚娜	男	西安交通大学	信息工程	13772148940	1	2	");
+	equals(result[4], "A	马亚娜	女	西安交通大学	信息工程	13772148940	1	2	");
+	equals(result[5], "D	马亚娜	男人	西安交通大学	信息工程	13772148940	1	2	");
 });
 
 module("candidates_test", {

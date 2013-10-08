@@ -75,11 +75,11 @@ function index_in_scople(parent, current_elem, select) {
 function import_candidates(data_from, groupsCount){
 	var candidates = new Candidates(groupsCount)
 
-	getLocalStorage().clear();
-	getLocalStorage().setItem('groupsCount', groupsCount);
+    getLocalStorage().clear();
+    candidates.fromCSV(data_from);
 
-	candidates.fromCSV(data_from);
-	candidates.persist();
+    getLocalStorage().setItem('groupsCount', candidates.getGroupsCount());
+    candidates.persist();
 	candidates.render();
 	init_pages();
 }
@@ -103,43 +103,82 @@ function regroup_candidates(data) {
 
 function load_demo_data(textarea) {
 	var demo_data = "\
-魏文彬	男	西安交通大学	计算机科学与技术	13500000001	12	11	37	45\n\
-姜欣	男	西北工业大学	计算机科学与技术	13500000001	12	11	29	44\n\
-蒋新建	男	西安交通大学	计算机系统结构	13500000001	12	11	27	46\n\
-罗伟雄	男	西安交通大学	计算机科学与技术	13500000001	12	11	27	45\n\
-张华立	女	西安交通大学	信息工程	13500000001	12	11	26	47\n\
-龙丹妮	男	西北大学	计算机应用	13500000001	12	11	25	37\n\
-许三多	男	西北工业大学	微机电系统集成设计技术	13500000001	12	11	24	43\n\
-甘小宁	男	西电		13500000001	12	11	24	34\n\
-张玉生	男	西电	计算机	13500000001	12	11	23	37\n\
-王志刚	男	西电	计算机	13500000001	12	11	22	41\n\
-仕明	男	西电	计算机系统结构	13500000001	12	11	22	33\n\
-康洪雷	男	西电	计算机	13500000001	12	11	22	30\n\
-徐仕明	男	西交	计算机科学与技术	13500000001	12	11	21	43\n\
-舒崇福	男	上海交通大学	自动化双控	13500000001	12	11	20	32\n\
-王中军	女	西安交通大学	通信与信息系统	13500000001	12	11	20	40\n\
-杨文虎	男	西电		13500000001	12	11	16	17\n\
-赵明仁	女	西电	计算机应用技术	13500000001	12	11	16	26\n\
-王中磊	男	电信学院	计算机科学与技术	13500000001	12	11	16	20\n\
-施方平	女	西安交通大学	计算机科学与技术	13500000001	11	11	19	39\n\
-高爱平	男	西安交通大学	计算机软件与理论	13500000001	11	11	29	46\n\
-张寒冰	男	西北工业大学	计算数学	13500000001	11	11	28	45\n\
-韩志伟	女	西电	计算机应用技术	13500000001	11	11	27	36\n\
-姬建刚	女	西北大学	计算机软件与理论	13500000001	11	11	26	40\n\
-王世顺	男	西安交通大学	计算机科学与技术	13500000001	11	11	25	46\n\
-甄洪民	女	西北工业大学	计算机科学与技术	13500000001	11	11	25	37\n\
-冯志远	女	西安交通大学		13500000001	11	11	25	47\n\
-刘义强	男	西安交通大学	计算机系统结构	13500000001	11	11	23	44\n\
-杨峻峰	男	西安电子科技大学	计算机系统结构	13500000001	11	11	23	32\n\
-邓长叶	男	西电		13500000001	11	11	22	35\n\
-张金华	女	西安交通大学	计算机系统结构	13500000001	11	11	21	28\n\
-祝树良	女	西安电子科技大学	计算机应用	13500000001	11	11	20	34\n\
-张崇林	女	西交	计算机科学与技术	13500000001	11	11	20	43\n\
-邓宝	男	西北工业大学	计算机应用技术	13500000001	11	11	19	28\n\
-许兰	女	西安交通大学	软件工程	13500000001	11	11	18	34\n\
-刘海洋	男	西电	计算机软件	13500000001	11	11	16	33";
-	
-	textarea.val(demo_data);
+魏文彬	男	西安交通大学	计算机科学与技术	13500000001	12	11	37	45comment\n\
+姜欣	男	西北工业大学	计算机科学与技术	13500000001	12	11	29	44	comment\n\
+蒋新建	男	西安交通大学	计算机系统结构	13500000001	12	11	27	46	comment\n\
+罗伟雄	男	西安交通大学	计算机科学与技术	13500000001	12	11	27	45	comment\n\
+张华立	女	西安交通大学	信息工程	13500000001	12	11	26	47	comment\n\
+龙丹妮	男	西北大学	计算机应用	13500000001	12	11	25	37	comment\n\
+许三多	男	西北工业大学	微机电系统集成设计技术	13500000001	12	11	24	43	comment\n\
+甘小宁	男	西电		13500000001	12	11	24	34	comment\n\
+张玉生	男	西电	计算机	13500000001	12	11	23	37	comment\n\
+王志刚	男	西电	计算机	13500000001	12	11	22	41	comment\n\
+仕明	男	西电	计算机系统结构	13500000001	12	11	22	33	comment\n\
+康洪雷	男	西电	计算机	13500000001	12	11	22	30	comment\n\
+徐仕明	男	西交	计算机科学与技术	13500000001	12	11	21	43	comment\n\
+舒崇福	男	上海交通大学	自动化双控	13500000001	12	11	20	32	comment\n\
+王中军	女	西安交通大学	通信与信息系统	13500000001	12	11	20	40	comment\n\
+杨文虎	男	西电		13500000001	12	11	16	17	comment\n\
+赵明仁	女	西电	计算机应用技术	13500000001	12	11	16	26	comment\n\
+王中磊	男	电信学院	计算机科学与技术	13500000001	12	11	16	20	comment\n\
+施方平	女	西安交通大学	计算机科学与技术	13500000001	11	11	19	39	comment\n\
+高爱平	男	西安交通大学	计算机软件与理论	13500000001	11	11	29	46	comment\n\
+张寒冰	男	西北工业大学	计算数学	13500000001	11	11	28	45	comment\n\
+韩志伟	女	西电	计算机应用技术	13500000001	11	11	27	36	comment\n\
+姬建刚	女	西北大学	计算机软件与理论	13500000001	11	11	26	40	comment\n\
+王世顺	男	西安交通大学	计算机科学与技术	13500000001	11	11	25	46	comment\n\
+甄洪民	女	西北工业大学	计算机科学与技术	13500000001	11	11	25	37	comment\n\
+冯志远	女	西安交通大学		13500000001	11	11	25	47	comment\n\
+刘义强	男	西安交通大学	计算机系统结构	13500000001	11	11	23	44	comment\n\
+杨峻峰	男	西安电子科技大学	计算机系统结构	13500000001	11	11	23	32	comment\n\
+邓长叶	男	西电		13500000001	11	11	22	35	comment\n\
+张金华	女	西安交通大学	计算机系统结构	13500000001	11	11	21	28	comment\n\
+祝树良	女	西安电子科技大学	计算机应用	13500000001	11	11	20	34	comment\n\
+张崇林	女	西交	计算机科学与技术	13500000001	11	11	20	43	comment\n\
+邓宝	男	西北工业大学	计算机应用技术	13500000001	11	11	19	28	comment\n\
+许兰	女	西安交通大学	软件工程	13500000001	11	11	18	34	comment\n\
+刘海洋	男	西电	计算机软件	13500000001	11	11	16	33	comment";
+
+    var demoData2 = "夏思雨测试	18302968133	女	xiasiyu@qq.com	华中科技大学	master	通信	health	6	0	2013-10-08-B组	B	2013-10-15-上午A组	A		\"HR \n\
+        :123 \n\
+    1231aaa\"	Campus Event \n\
+毛超测试	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+魏文彬 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-B组	D		no comment	Campus Activity \n\
+姜欣  	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-AC组	D		no comment	Campus Activity \n\
+蒋新建 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-AC组	D		no comment	Campus Activity \n\
+罗伟雄 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+张华立 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+龙丹妮 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+许三多 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+甘小宁 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+张玉生 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+王志刚 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+仕明  	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-AA组	D		no comment	Campus Activity \n\
+康洪雷 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-AA组	D		no comment	Campus Activity \n\
+徐仕明 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-AC组	D		no comment	Campus Activity \n\
+舒崇福 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+王中军 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+杨文虎 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-AGG组	D		no comment	Campus Activity \n\
+赵明仁 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+王中磊 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+施方平 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-FA组	D		no comment	Campus Activity \n\
+高爱平 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-FA组	D		no comment	Campus Activity \n\
+张寒冰 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+韩志伟 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+姬建刚 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-ABB组	D		no comment	Campus Activity \n\
+王世顺 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-ABS组	D		no comment	Campus Activity \n\
+甄洪民 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-FA组	D		no comment	Campus Activity \n\
+冯志远 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-ABS组	D		no comment	Campus Activity \n\
+刘义强 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-AGG组	D		no comment	Campus Activity \n\
+杨峻峰 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+邓长叶 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+张金华 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-FA组	D		no comment	Campus Activity \n\
+祝树良 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+张崇林 	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+邓宝  	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-A组	D		no comment	Campus Activity \n\
+许兰  	13809154213	女	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-AGG组	D		no comment	Campus Activity \n\
+刘海洋 	13809154213	男	chaomao@thoughtworks.com	西北工业大学	bachelor	计算机	health	8	0	2013-10-08-D组	A	2013-10-20-ABB组	D		no comment	Campus Activity \n";
+	textarea.val(demoData2);
 }
 
 function init_pages() {
@@ -338,4 +377,10 @@ function load_group_count() {
 	} else {
 		$("#groups-count").val(groupsCount);
 	}
+}
+
+function get_group_name_by_index(index) {
+    day = Math.floor(index/5) + 1
+    group_per_day = index%5 + 1
+    return 'G-' + day + '-' + group_per_day;
 }

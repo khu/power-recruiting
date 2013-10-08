@@ -1,6 +1,6 @@
 module("profile_test", {
 	setup: function() {
-		var candidate = new Candidate([12, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "D", "G-1-1", "#good comments#"]);
+		var candidate = new Candidate([12, "马亚娜", "13772148940", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "D", "", "good comments", ""]);
 		var groupid = candidate.group;
 		var html = '<div id="profiles"></div>'
 		$("#qunit-fixture").append($(html));
@@ -23,7 +23,7 @@ test("should render the college of candidate", function() {
 });
 
 test("should render the logic of candidate", function() {
-	assertEntireContentExist('12');
+	assertEntireContentExist('1');
 });
 
 test("should render the gender of candidate", function() {
@@ -31,7 +31,7 @@ test("should render the gender of candidate", function() {
 });
 
 test("should render the wonderlic of candidate", function() {
-	assertEntireContentExist("26");
+	assertEntireContentExist("2");
 });
 
 test("should render the comments of candidate", function() {

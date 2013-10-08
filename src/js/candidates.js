@@ -6,7 +6,7 @@ function getLocalStorage() {
 var Candidates = $.Class.create({
 	initialize: function(groupsCount) {
 		this._candidates = [];
-		this._groupsCount = groupsCount == null ? 5 : groupsCount;
+		this._groups = {};
 	},
 	// methods
 	size: function() {
@@ -39,60 +39,35 @@ var Candidates = $.Class.create({
 		if(string == null || string.trim() == ""){
 			return;
 		}
-		objs = csv2array(string.trim(), "\t")
-		if(!objs) return
-		var size = objs.length;
-		for (var i = 0; i < size; i++) {
-			var candidateInfoItems = objs[i];
-			if (this.isMeaninglessInput(candidateInfoItems) || this.isHeader(candidateInfoItems)){
-				continue;
-			}
+        objs = csv2array(string.trim(), "\t");
+        var that = this;
+        _.each(objs, function (candidate) {
+            if (that.isMeaninglessInput(candidate) || that.isHeader(candidate)) {
+                return;
+            }
+            that._candidates.push(new Candidate(candidate, that.size()));
+        });
+        this._groups = this.updateGroupInfo(that._candidates, that._groups);
+	},
+    updateGroupInfo:function(candidates, groups){
+        groups = this.createCodeMap(candidates);
+        _.each(candidates, function(candidate){
+            candidate.updateGroupIndex(groups);
+        });
+        return groups;
+    },
+    createCodeMap:function(candidates){
+        var originalMap = _.groupBy(candidates, function(candidate){ return candidate.group_name; });
+        var names = _.keys(originalMap);
+        return _.reduce(names, function(finalMap, name){
+            finalMap[name] = get_group_name_by_index(_.keys(finalMap).length);
+            return finalMap;
+        }, {});
 
-			this.init_for_the_first_time(candidateInfoItems, i)
-			this._candidates.push(new Candidate(candidateInfoItems))
-		}
-	},
 
-	init_for_the_first_time:function(fieldsOfCandidate, i) {
-		this.init_id(fieldsOfCandidate, i);
-		if(fieldsOfCandidate.length === 11) {
-			this.init_comments(fieldsOfCandidate);
-			this.init_group(fieldsOfCandidate);
-		} else if(fieldsOfCandidate.length === 12) {
-			this.init_comments(fieldsOfCandidate);
-			this.init_group_fill(fieldsOfCandidate);
-		}
-		this.init_grade(fieldsOfCandidate);
-
-	},
-
-	init_id:function(fieldsOfCandidate, i) {
-		fieldsOfCandidate.unshift(i + 1);	
-	},
-	init_group_fill:function(fieldsOfCandidate) {
-		fieldsOfCandidate[10] = fieldsOfCandidate[11];
-	},
-	init_group:function(fieldsOfCandidate) {
-		var candidateIndex = fieldsOfCandidate[0] - 1;
-		var groupIndex = candidateIndex % this._groupsCount;
-		fieldsOfCandidate[10] = this.get_group_name_by_index(groupIndex);
-	},
-	init_grade:function(fieldsOfCandidate) {
-		fieldsOfCandidate[11] = 'D'
-		fieldsOfCandidate[13] = ''
-	},
-	init_comments:function(fieldsOfCandidate) {
-		fieldsOfCandidate[12] = '#'+fieldsOfCandidate[10]+'#'
-	},
+    },
 	find:function(id) {
-		var size = this._candidates.length
-		for (var i = 0; i < size; i++) {
-			if (this._candidates[i].id == id) {
-				return this._candidates[i]
-			}
-		}
-
-		return null;
+        return _.find(this._candidates, function(c){ return (c.id - 0) == id; });
 	},
 	index:function(id) {
 		var size = this._candidates.length
@@ -105,11 +80,11 @@ var Candidates = $.Class.create({
 	},
 	remove: function(id) {
 		this._candidates.splice(this.index(id), 1);
-		
+
 		var localStorage = getLocalStorage();
 		localStorage.removeItem('candidates_index');
 		localStorage.removeItem('profile-' + id);
-		
+
 		this.persist();
 	},
 	contains:function(id) {
@@ -134,21 +109,18 @@ var Candidates = $.Class.create({
 		this.clean_init();
 		this.init_groups();
 		set_current_group(currentGroup);
-		
-		for (var i = 0; i < this.size(); i++) {
-			var candidate = this.get(i);			
-			candidate.render();
-		}
-		
+
+        _.each(this._candidates, function(candidate){
+            candidate.render();
+        });
+
 		var profiles = new Profiles(this);
 		profiles.clean();
 		profiles.render();
 	},
-	get_group_name_by_index: function(index) {
-		day = Math.floor(index/5) + 1
-		group_per_day = index%5 + 1
-		return 'G-' + day + '-' + group_per_day
-	},
+    getGroupsCount: function(){
+        return _.keys(this._groups).length;
+    },
 	init_groups: function() {
 		var parent = $("#rank .sub-tab-header");
 		var gradeElements = '<div class="grade gradeA"><div class="grade-bg-text">1</div></div>'
@@ -164,10 +136,10 @@ var Candidates = $.Class.create({
 				selected = "sub-tab-button-active";
 				display = "";
 			}
-			
-			var panel_id = this.get_group_name_by_index(i);
+
+			var panel_id = get_group_name_by_index(i);
 			var open_panel_id = 'open-' +  panel_id;
-		
+
 			var groupsHeader = '<div class="sub-tab-button-container ' + selected + '">'
 				+ '<span class="sub-tab-button" id="' + open_panel_id + '">' + panel_id + '</span>'
 			+ '</div>'
@@ -188,10 +160,9 @@ var Candidates = $.Class.create({
 		if(!getLocalStorage().getItem('candidates_index')){
 			this.init_perist_data();
 		}
-		var size = this._candidates.length
-		for (var i = 0; i < size; i++) {
-			this._candidates[i].persist();
-		}		
+        _.each(this._candidates, function(c){
+            c.persist();
+        });
 	},
 	init_perist_data:function(){
 		var profile_index_str = ''
@@ -210,11 +181,11 @@ var Candidates = $.Class.create({
 		}
 	},
 	export_as:function() {
-		var sortedCandidates = this._candidates.sort(function(candidate1, candidate2){ 
+		var sortedCandidates = this._candidates.sort(function(candidate1, candidate2){
 			if (candidate1.grade === candidate2.grade) return 0;
 			return (candidate1.grade > candidate2.grade) ? 1 : -1;
 		});
-		
+
 		var exportingText = "";
 		for(var i = 0; i < sortedCandidates.length; i++) {
 			exportingText += sortedCandidates[i].export_as() + '\n';
@@ -250,17 +221,17 @@ var Candidates = $.Class.create({
 			var id = candidate.attr('id');
 			candidate.attr('id', id+'_last');
 			candidate.addClass('undraggable');
-			
+
 			$('#'+id).remove();	//remove in-dragging card
 			candidateInstance.renderItself();
-			
+
 			init_profile_binding();
 			init_drag_ability();
-		} 
+		}
 		else if ((this.fromSingleGroup(candidate) && this.toGradeForGroup(grade))
 				|| (this.fromAllGroups(candidate) && this.toGradeInAll(grade))){
 			candidate.appendTo(grade).fadeIn();
-		} 
+		}
 		else if (this.fromAllGroups(candidate) && this.toGradeForGroup(grade)){
 			$("#single-group > div").find("#"+candidate.attr("id")).remove();
 			$("#single-group > div").find("#"+candidate.attr("id") + "_last").remove();

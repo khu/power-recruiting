@@ -7,6 +7,7 @@
 		<link type="text/css" href="css/main.css" rel="stylesheet"/>
 		<link rel="stylesheet" type="text/css" href="css/colorbox/colorbox.css" media="screen" />
 		
+		<script type="text/javascript" src="js/underscore-min.js"></script>
 		<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery.class.js"></script>
 		<script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
@@ -57,9 +58,6 @@
 						<div class="sub-tab-button-container" id="open-export-button">
 							<span class="sub-tab-button" id="open-export">Export</span>
 						</div>
-						<div class="sub-tab-button-container" id="open-export-button">
-							<span class="sub-tab-button" id="open-re-group">ReGroup</span>
-						</div>
 					</div>
 					<div id="import">
 						<div class="form-fieldset">
@@ -74,10 +72,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="form-fieldset-instructions">
-								<span>Please select the groups count:</span>
-								<input type="number" id="groups-count" min="3" max="20" value="10">
-							</div>
+
 							<div class="form-button-container">
 								<div class="button form-button import-button">
 									<span>Reset Data</span>
@@ -99,25 +94,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="re-group" style="display:none">
-						<div class="form-fieldset">
-							<div class="form-fieldset-title">
-								<label>Import Candidates Group Information</label>
-							</div>
-							<div class="panel-body">
-								<div class="field-textarea">
-									<div class="form-field-container">
-										<textarea id="re-group-data" class="input-text"></textarea>	
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="form-button-container">
-							<div class="button form-button regroup-button">
-								<span>Re Group</span>
-							</div>
-						</div>
-					</div>
+
 				</div>
 				<div id="rank" style="display:none;">			
 					<div class="sub-tab-header">

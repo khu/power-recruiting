@@ -4,33 +4,35 @@ module("candidate_test", {
 });
 
 test("should render the single candidate", function() {
-	var candidate = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-2", "D"]);
+    //1 马亚娜	18302968133	女	xiasiyu@qq.com	华中科技大学	master
+    // 通信	health	6	0	2013-10-08-C组	B	2013-10-15-上午A组
+    // B+		HR Campus Event
+	var candidate = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "1", "", "", ""]);
 	equals(12, candidate.id);
 	equals("马亚娜", candidate.name);
 	equals("女", candidate.gender);
 	equals("西安交通大学", candidate.college);
-	equals("信息工程", candidate.department);
-	equals(12, candidate.logic_score);
-	equals(11, candidate.logic_answered);
-	equals(26, candidate.w_correct);
-	equals(47, candidate.w_answered);
-	equals("G-1-2", candidate.group)
-	equals('D', candidate.grade)
+	equals(candidate.department, "信息工程");
+	equals(1, candidate.logic_score);
+	equals(2, candidate.w_correct);
+	equals("G-1-1", candidate.group)
+	equals(candidate.grade, '1')
 });
 
 test("should she is female if the second value is 女", function() {
-	var candidate = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
+	var candidate = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "D", ""]);
 	equals(candidate.is_female(), true)
 });
 
 test("should she is offered if the rank in total is not below 2-B", function() {
-	var candidate1 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '1']);
-	var candidate2 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '2-A']);
-	var candidate3 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '2-B']);
-	var candidate4 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '2-C']);
-	var candidate5 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '3']);
-	var candidate6 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'A']);
-	var candidate7 = new Candidate([12, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
+	var candidate1 = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "1", "", ""]);
+	var candidate2 = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "2-A", "", ""]);
+	var candidate3 = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "2-B", "", ""]);
+	var candidate4 = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "2-C", "", ""]);
+	var candidate5 = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "3", "", ""]);
+	var candidate6 = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "A", "", ""]);
+	var candidate7 = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "D", "", ""]);
+
 	equals(candidate1.is_offered(), true)
 	equals(candidate2.is_offered(), true)
 	equals(candidate3.is_offered(), true)
@@ -41,16 +43,16 @@ test("should she is offered if the rank in total is not below 2-B", function() {
 });
 
 test("should export all candidates data no matter which grade", function() {
-	var candidate = new Candidate([52, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
-	equals(candidate.export_as(), "D	马亚娜	女	西安交通大学	信息工程	13772148940	12	11	26	47")
+	var candidate = new Candidate([12, "马亚娜", "13772148940", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "D", "", ""]);
+	equals(candidate.export_as().indexOf("D"), 0);
 	
 	candidate.grade = 1
-	equals(candidate.export_as(), "1	马亚娜	女	西安交通大学	信息工程	13772148940	12	11	26	47")
+    equals(candidate.export_as().indexOf("1"), 0);
 });
 
 test("should export candidate data with comments", function() {
-	var candidate = new Candidate([52, "马亚娜", "女", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D', "#She is good at testing.	Ignore tab and trim blank #"]);
-	equals(candidate.export_as(), "D	马亚娜	女	西安交通大学	信息工程	13772148940	12	11	26	47	#She is good at testing. Ignore tab and trim blank#")
+	var candidate = new Candidate([12, "马亚娜", "13772148940", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "D", "", "#She is good at testing.	Ignore tab and trim blank #", ""]);
+	equals(candidate.export_as().indexOf("##She is good at testing. Ignore tab and trim blank ##") > 0, true);
 });
 
 module("candidate_test", {
@@ -84,14 +86,14 @@ test("should render the single candidate to its groupD by default", function() {
 });
 
 test("should render the single candidate to specific group", function() {
-	var candidate = new Candidate([1, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", "B"]);
+	var candidate = new Candidate([12, "马亚娜", "13772148940", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "B", "", "", ""]);
 	equals($(".gradeB #" + candidate.id).exists(), false)
 	candidate.render();
 	equals($(".gradeB #" + candidate.id).exists(), true)
 });
 
 test("should render the single candidate to overall rank group", function() {
-	var candidate = new Candidate([1, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", "2-A"]);
+	var candidate = new Candidate([12, "马亚娜", "13772148940", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "2-A", "", "", ""]);
 	equals($(".grade2-A #" + candidate.id).exists(), false)
 	candidate.render();
 	equals($(".grade2-A #" + candidate.id).exists(), true)
