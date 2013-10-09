@@ -17,7 +17,8 @@ test("should parse the single candidate", function() {
 	equals(0, candidate.w_correct);
 	equals("G-1-1", candidate.group);
 	equals('D', candidate.grade);
-	equals(candidates.toCSV() , "1	马亚娜	13772148940	F		西安交通大学		信息工程		8	0			G-1-1	D		#no comment#	");
+
+	equals(candidates.toCSV() , "1	马亚娜	13772148940	F		西安交通大学		信息工程		8	0			G-1-1	D		no comment\t\t\t\tD");
 });
 
 test("should parse the single candidate with default group", function() {
@@ -25,7 +26,7 @@ test("should parse the single candidate with default group", function() {
 	candidates.fromCSV("马亚娜	13772148940	F	chaomao@thoughtworks.com	西安交通大学	bachelor	信息工程	health	8	0	2013-10-08-D组	A	2013-10-20-A组	A		no comment	Campus Activity");
 	candidate = candidates.find(1)
 	equals(candidate.group, "G-1-1");
-	equals(candidates.toCSV(), "1	马亚娜	13772148940	F		西安交通大学		信息工程		8	0			G-1-1	D		#no comment#	");
+	equals(candidates.toCSV(), "1	马亚娜	13772148940	F		西安交通大学		信息工程		8	0			G-1-1	D		no comment\t\t\t\tD");
 });
 
 test("should parse multiple candidates", function() {

@@ -18,7 +18,6 @@ var Candidate = $.Class.create({
 			obj = this.init_for_the_first_time(obj, i);
 		} else {
 			this.init_comments(obj);
-			this.init_grade(obj);
 		}
 
 		this.id = obj[0] - 0;
@@ -29,7 +28,7 @@ var Candidate = $.Class.create({
 		this.department = obj[7];
 		this.logic_score = obj[9] - 0;
 		this.w_correct = obj[10] - 0;
-		this.group = "G-1-1";
+		this.group = obj[this.group_index] == undefined ? "G-1-1" : obj[this.group_index];
 		this.grade = obj[this.grade_index] == undefined ? 'D' : obj[this.grade_index];
 		this.comments = this.getCommentsContent(obj[this.comments_index]);
 		this.last_grade = obj[this.prev_grade_index] || this.grade;
@@ -38,7 +37,7 @@ var Candidate = $.Class.create({
 	init_for_the_first_time: function (fieldsOfCandidate, i) {
 		this.init_id(fieldsOfCandidate, i);
 		this.init_comments(fieldsOfCandidate);
-		this.init_default_grade(fieldsOfCandidate);
+		this.init_grade(fieldsOfCandidate);
 		return fieldsOfCandidate;
 	},
 
@@ -49,14 +48,9 @@ var Candidate = $.Class.create({
 		this.group = groups[this.group_name];
 	},
 	init_grade: function (fieldsOfCandidate) {
-		fieldsOfCandidate[this.prev_grade_index] = '';
-	},
-	init_default_grade: function (fieldsOfCandidate) {
 		fieldsOfCandidate[this.grade_index] = 'D';
-		this.init_grade(fieldsOfCandidate);
 	},
 	init_comments: function (fieldsOfCandidate) {
-
 		fieldsOfCandidate[this.comments_index] = '#' + fieldsOfCandidate[this.raw_comments_index] + '#'
 	},
 	getCommentsContent: function (comments) {
@@ -158,11 +152,8 @@ var Candidate = $.Class.create({
 			+ this.group + "\t"
 			+ this.grade + "\t\t";
 
-		str += wrapCommentsContent(this.comments);
-		str += "\t";
-		if (!this._is_single_group()) {
-			str += "\t" + this.last_grade;
-		}
+		str += this.comments;
+		str += "\t\t\t\t" + this.last_grade;
 		return str;
 	},
 	persist: function () {

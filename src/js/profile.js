@@ -61,7 +61,7 @@ var Profile = $.Class.create({
 		if(parentId == "profiles") {
 			return;
 		}
-		var comment = this.candidate.comments.replace(/<br\/>/g,'\n')
+		var comment = this.candidate.comments.replace(/<br\/>/g,'\n').replace(/^#/, '').replace(/#$/, '');
 		var html = this.template.replace("${name}", this.candidate.name)
 							.replace("${college}", this.candidate.college)
 							.replace("${logic}", this.candidate.logic_score)

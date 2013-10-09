@@ -205,7 +205,7 @@ var Candidates = $.Class.create({
 			if(CSV_data == null){
 				continue;
 			}
-			obj_array = CSV_data.split("\t");
+			var obj_array = CSV_data.split("\t");
 
 			var candidate = new Candidate(obj_array);
 			this._candidates.push(candidate)
@@ -213,9 +213,9 @@ var Candidates = $.Class.create({
 	},
     rank:function(candidate, grade) {
 		var candidateInstance = this.find(candidate.attr('id'));
-		candidateInstance.updateGrade(grade.attr('class').toString())
+		candidateInstance.updateGrade(grade.attr('class').toString());
 		candidateInstance.updateGroup(grade);
-		candidateInstance.persist()
+		candidateInstance.persist();
 
 		if (this.fromSingleGroup(candidate) && this.toGradeInAll(grade)) {
 			var id = candidate.attr('id');

@@ -7,7 +7,7 @@ test("should render the single candidate", function() {
     //1 马亚娜	18302968133	女	xiasiyu@qq.com	华中科技大学	master
     // 通信	health	6	0	2013-10-08-C组	B	2013-10-15-上午A组
     // B+		HR Campus Event
-	var candidate = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "1", "", "", ""]);
+	var candidate = new Candidate([12, "马亚娜", "18302968133", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "G-1-1", "1", "", "", ""]);
 	equals(12, candidate.id);
 	equals("马亚娜", candidate.name);
 	equals("女", candidate.gender);
@@ -15,7 +15,7 @@ test("should render the single candidate", function() {
 	equals(candidate.department, "信息工程");
 	equals(1, candidate.logic_score);
 	equals(2, candidate.w_correct);
-	equals("G-1-1", candidate.group)
+	equals(candidate.group, "G-1-1");
 	equals(candidate.grade, '1')
 });
 
@@ -86,7 +86,7 @@ test("should render the single candidate to its groupD by default", function() {
 });
 
 test("should render the single candidate to specific group", function() {
-	var candidate = new Candidate([12, "马亚娜", "13772148940", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "B", "", "", ""]);
+	var candidate = new Candidate([12, "马亚娜", "13772148940", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "G-1-1", "B", "", "", ""]);
 	equals($(".gradeB #" + candidate.id).exists(), false)
 	candidate.render();
 	equals($(".gradeB #" + candidate.id).exists(), true)

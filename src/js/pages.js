@@ -269,21 +269,26 @@ function init_new_candidate_container() {
 function collect_new_candidate_info() {
 	var idsString = getLocalStorage().getItem('candidates_index');
 	var newCandidateId = idsString === null ? 1 : idsString.split(',').length * 50;
-	
+	  //[12, "马亚娜", "13772148940", "女", "", "西安交通大学", "", "信息工程", "", 1, 2, "", "", "2013-10-15-上午A组", "2-A", "", "", ""]
 	var info = [];
 	info.push(newCandidateId);
 	info.push($('#newCandidateName').val());
-	info.push($('#newCandidateGender').val());
-	info.push($('#newCandidateCollege').val());
-	info.push('NaN');	//department
 	info.push('NaN');	//phone
+	info.push($('#newCandidateGender').val());
+	info.push('NaN');	//mailbox
+	info.push($('#newCandidateCollege').val());
+	info.push('NaN');	//degree
+	info.push('NaN');	//department
+	info.push('NaN');	//status
 	info.push($('#newCandidateLogic').val());
-	info.push('NaN');	//answered-logic
 	info.push($('#newCandidateWonderlic').val());
-	info.push('NaN');	//ansered-wonderlic
+	info.push('NaN');	//HR Group
+	info.push('NaN');	//HR result
 	info.push(get_current_group()); //hard-coded group
 	info.push('D');	//default grade
+	info.push('NaN');	//offer
 	info.push(wrapCommentsContent($('#newCandidateComments').val()));
+	info.push('NaN');	//info source
 
 	return info;
 }
@@ -380,7 +385,7 @@ function load_group_count() {
 }
 
 function get_group_name_by_index(index) {
-    day = Math.floor(index/5) + 1
-    group_per_day = index%5 + 1
+    day = Math.floor(index/5) + 1;
+    group_per_day = index%5 + 1;
     return 'G-' + day + '-' + group_per_day;
 }
