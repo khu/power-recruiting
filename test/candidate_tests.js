@@ -79,7 +79,7 @@ module("candidate_test", {
 });
 
 test("should render the single candidate to its groupD by default", function() {
-	var candidate = new Candidate([1, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", 'D']);
+	var candidate = new Candidate([1, "马亚娜", "F", "西安交通大学", "信息工程", "13772148940", 12, 11, 26, 47, "G-1-1", '']);
 	equals($(".gradeD #1").exists(), false)
 	candidate.render();
 	equals($(".gradeD #1").exists(), true)
